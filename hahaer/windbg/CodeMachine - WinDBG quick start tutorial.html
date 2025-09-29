@@ -1,0 +1,1075 @@
+<!DOCTYPE html>
+<!-- saved from url=(0055)https://codemachine.com/articles/windbg_quickstart.html -->
+<html lang="en"><!-- Copyright (c) CodeMachine Inc. All rights reserved. --><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+<!-- META NAME -->
+
+<meta name="msvalidate.01" content="D7FE7058021187E5CE342A322AD6E8AF">
+<meta name="google-site-verification" content="p5QH6Y_UMMeiN2UqoATDhsUjQ41mARKlHhydVNBDrIU">
+<meta name="revisit-after" content="1 month">
+<meta name="author" content="CodeMachine Inc.">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="WinDBG quick start tutorial">
+
+<!-- LINKS /-->
+<link rel="stylesheet" type="text/css" href="./CodeMachine - WinDBG quick start tutorial_files/bootstrap.min.css">
+<link rel="stylesheet" type="text/css" href="./CodeMachine - WinDBG quick start tutorial_files/fontawesome.min.css">
+<link rel="stylesheet" type="text/css" href="./CodeMachine - WinDBG quick start tutorial_files/custom.css">
+<link rel="icon" type="image/x-icon" href="https://codemachine.com/assets/favicon.ico">
+<link rel="canonical" href="https://codemachine.com/articles/windbg_quickstart.html">
+
+<!-- SCRIPTS /-->
+<script type="text/javascript" async="" src="./CodeMachine - WinDBG quick start tutorial_files/analytics.js.download"></script><script type="text/javascript" async="" src="./CodeMachine - WinDBG quick start tutorial_files/js"></script><script src="./CodeMachine - WinDBG quick start tutorial_files/bootstrap.min.js.download"></script><meta name="maxai-mui-classname-prefix" content="injectDocumentStart-2024-12-31T16:48:03.984Z"><script src="chrome-extension://ngphehpfehdmjellohmlojkplilekadg/apps/content-scripts/website/maxai.js"></script>
+<script src="./CodeMachine - WinDBG quick start tutorial_files/jquery.min.js.download"></script>
+<script src="./CodeMachine - WinDBG quick start tutorial_files/js(1)"></script>
+
+<script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'UA-180272031-1');
+</script>
+
+<script type="text/javascript">
+    $(function(){
+        $("#cm-navbar").load("/assets/navbar.html");
+        $("#cm-announce").load("/assets/adbar.html");
+        $("#cm-footer").load("/assets/footer.html");
+    });
+</script>
+
+<title>CodeMachine - WinDBG quick start tutorial</title>
+
+<style id="_goober"> .go1475592160{height:0;}.go1671063245{height:auto;}.go1888806478{display:flex;flex-wrap:wrap;flex-grow:1;}@media (min-width:600px){.go1888806478{flex-grow:initial;min-width:288px;}}.go167266335{background-color:#313131;font-size:0.875rem;line-height:1.43;letter-spacing:0.01071em;color:#fff;align-items:center;padding:6px 16px;border-radius:4px;box-shadow:0px 3px 5px -1px rgba(0,0,0,0.2),0px 6px 10px 0px rgba(0,0,0,0.14),0px 1px 18px 0px rgba(0,0,0,0.12);}.go3162094071{padding-left:20px;}.go3844575157{background-color:#313131;}.go1725278324{background-color:#43a047;}.go3651055292{background-color:#d32f2f;}.go4215275574{background-color:#ff9800;}.go1930647212{background-color:#2196f3;}.go946087465{display:flex;align-items:center;padding:8px 0;}.go703367398{display:flex;align-items:center;margin-left:auto;padding-left:16px;margin-right:-8px;}.go3963613292{width:100%;position:relative;transform:translateX(0);top:0;right:0;bottom:0;left:0;min-width:288px;}.go1141946668{box-sizing:border-box;display:flex;max-height:100%;position:fixed;z-index:1400;height:auto;width:auto;transition:top 300ms ease 0ms,right 300ms ease 0ms,bottom 300ms ease 0ms,left 300ms ease 0ms,max-width 300ms ease 0ms;pointer-events:none;max-width:calc(100% - 40px);}.go1141946668 .notistack-CollapseWrapper{padding:6px 0px;transition:padding 300ms ease 0ms;}@media (max-width:599.95px){.go1141946668{width:100%;max-width:calc(100% - 32px);}}.go3868796639 .notistack-CollapseWrapper{padding:2px 0px;}.go3118922589{top:14px;flex-direction:column;}.go1453831412{bottom:14px;flex-direction:column-reverse;}.go4027089540{left:20px;}@media (min-width:600px){.go4027089540{align-items:flex-start;}}@media (max-width:599.95px){.go4027089540{left:16px;}}.go2989568495{right:20px;}@media (min-width:600px){.go2989568495{align-items:flex-end;}}@media (max-width:599.95px){.go2989568495{right:16px;}}.go4034260886{left:50%;transform:translateX(-50%);}@media (min-width:600px){.go4034260886{align-items:center;}}</style><link id="USE_CHAT_GPT_AI_CONTENT_CSS_LINK_TAG" rel="stylesheet" href="chrome-extension://ngphehpfehdmjellohmlojkplilekadg/content.css"><link rel="stylesheet" href="./CodeMachine - WinDBG quick start tutorial_files/css2"><style type="text/css">.transform-component-module_wrapper__SPB86 {
+  position: relative;
+  width: -moz-fit-content;
+  width: fit-content;
+  height: -moz-fit-content;
+  height: fit-content;
+  overflow: hidden;
+  -webkit-touch-callout: none; /* iOS Safari */
+  -webkit-user-select: none; /* Safari */
+  -khtml-user-select: none; /* Konqueror HTML */
+  -moz-user-select: none; /* Firefox */
+  -ms-user-select: none; /* Internet Explorer/Edge */
+  user-select: none;
+  margin: 0;
+  padding: 0;
+}
+.transform-component-module_content__FBWxo {
+  display: flex;
+  flex-wrap: wrap;
+  width: -moz-fit-content;
+  width: fit-content;
+  height: -moz-fit-content;
+  height: fit-content;
+  margin: 0;
+  padding: 0;
+  transform-origin: 0% 0%;
+}
+.transform-component-module_content__FBWxo img {
+  pointer-events: none;
+}
+</style></head>
+
+<!--PAGE BEGIN/-->
+
+<body>
+
+<!-- NAVBAR /-->
+
+<div id="cm-navbar"><!-- Copyright (c) CodeMachine Inc. All rights reserved. -->
+<nav class="navbar fixed-top navbar-expand-md navbar-dark bg-dark">
+<div class="container-fluid">
+    <a class="navbar-brand" href="https://codemachine.com/index.html">CodeMachine</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+        <div class="navbar-nav">
+            <a id="home" class="nav-link" href="https://codemachine.com/index.html">Home</a>
+            <a id="training" class="nav-link" href="https://codemachine.com/training.html">Training</a>
+            <a id="bootcamp" class="nav-link" href="https://codemachine.com/bootcamp.html">Bootcamp</a>
+            <a id="articles" class="nav-link" href="https://codemachine.com/articles.html">Articles</a>
+            <a id="downloads" class="nav-link" href="https://codemachine.com/downloads.html">Downloads</a>
+            <a id="contact" class="nav-link" href="https://codemachine.com/about.html#contact">Contact</a>
+        </div>
+    </div>
+</div>
+</nav>
+</div>
+
+<!-- ARTICLE NAME /-->
+
+<header id="pagetitle">
+    <div class="jumbotron jumbotorn-fluid pagetitlebg">
+        <div class="container pagetitle">
+            <h1>WinDBG quick start tutorial</h1>
+            <h4>Step by step walk-through for learning basic commands and navigation in WinDBG.</h4>
+            <h5>© CodeMachine Inc. | codemachine.com | @codemachineinc</h5>
+        </div>
+    </div>
+</header>
+
+<!-- ARTICLE CONTENT /-->
+
+<main>
+<div class="pageborder">
+
+<article>
+<div class="container">
+
+<!---BEGIN--->
+
+<section>
+<div class="subsection">
+<h3>Overview</h3>
+<p>
+This post goes over the important commands in WinDBG through a step-by-step follow-along style walkthrough to help you get a jump start into using WinDBG and getting familiar with the commonly used commands.
+This is required pre-course reading for the <a href="https://codemachine.com/bootcamp.html">Windows Security Developer Bootcamp</a>.
+</p>
+<p>
+We will use WinDBG Preview which can be downloaded from the <a href="https://www.microsoft.com/en-us/p/windbg-preview/9pgjgd53tn86">Windows Store</a>. 
+The version that was used to write this post is WinDBG 1.0.2007.06001. 
+All examples used in the post are from WinDBG running on Windows 10 Version 19042 64-bit version.
+</p>
+</div>
+</section>
+
+<section>
+<div class="subsection">
+<h3>Getting setup</h3>
+<p>
+Prior to starting the debug session, we will set up the symbol path that we want WinDBG to use by running the following command in an administrative CMD.exe. 
+If you have the variable _NT_SYMBOL_PATH already set up, you don't have to change it, and therefore running the following command would not be necessary.
+</p>
+<pre>setx _NT_SYMBOL_PATH SRV*C:\symsrv*http://msdl.microsoft.com/download/symbols
+</pre>
+</div>
+</section>
+
+<section>
+<div class="subsection">
+<h3>Launching the target process</h3>
+<p>
+We are ready to start the debugger.
+There are a few different ways to use WinDBG to debug a process, the most common ones are attaching to a running process and launching a process from WinDBG. 
+For this walkthrough, we will be launching the native 64-bit executable from WinDBG. 
+</p>
+<p>
+To make it easy to follow along, we will choose an application that is available in every Windows 10 system i.e. notepad.exe. 
+The 64-bit notepad.exe is located in the <q>c:\windows\system32</q> directory.
+</p>
+<p>
+Start WinDBG from the Windows 10 <q>Start</q> menu.
+Once WinDBG has started, select <q>File</q>, then <q>Launch Executable</q>. 
+</p>
+<figure class="figure">
+<img class="figure-img img-fluid" src="./CodeMachine - WinDBG quick start tutorial_files/figure_windbg_quickstart_launch.png" alt="figure#1" data-first-enter-image="true"> 
+<figcaption class="figure-caption">Launch Executable</figcaption>
+</figure>
+<p>
+In the <q>Launch Executable</q> dialog box, browse to the directory <q>c:\Windows\System32</q> select <q>notepad.exe</q> and click on <q>Open</q>.
+</p>
+<figure class="figure">
+<img class="figure-img img-fluid" src="./CodeMachine - WinDBG quick start tutorial_files/figure_windbg_quickstart_notepad.png" alt="figure#2"> 
+<figcaption class="figure-caption">Select Notepad</figcaption>
+</figure>
+<p>
+When WinDBG launches an application, it stops at the initial breakpoint before the main entry point of the application is executed. 
+When WinDBG launches notepad.exe the following lines will be displayed in WinDBG's command Window. 
+This allows us to run some initial commands and set any desired breakpoints before the main entry point is called. More on this later.
+</p>
+<pre>Microsoft (R) Windows Debugger Version 10.0.20153.1000 AMD64
+Copyright (c) Microsoft Corporation. All rights reserved.
+
+CommandLine: C:\Windows\System32\notepad.exe
+
+************* Path validation summary **************
+Response                         Time (ms)     Location
+Deferred                                       SRV*C:\symsrv*https://msdl.microsoft.com/download/symbols
+Symbol search path is: SRV*C:\symsrv*https://msdl.microsoft.com/download/symbols
+Executable search path is: 
+ModLoad: 00007ff6`f8830000 00007ff6`f8868000   notepad.exe
+ModLoad: 00007ff9`ff090000 00007ff9`ff286000   ntdll.dll
+ModLoad: 00007ff9`fd840000 00007ff9`fd8fd000   C:\WINDOWS\System32\KERNEL32.DLL
+ModLoad: 00007ff9`fce20000 00007ff9`fd0e9000   C:\WINDOWS\System32\KERNELBASE.dll
+ModLoad: 00007ff9`fe5a0000 00007ff9`fe5ca000   C:\WINDOWS\System32\GDI32.dll
+ModLoad: 00007ff9`fcc90000 00007ff9`fccb2000   C:\WINDOWS\System32\win32u.dll
+ModLoad: 00007ff9`fca90000 00007ff9`fcb99000   C:\WINDOWS\System32\gdi32full.dll
+ModLoad: 00007ff9`fcbf0000 00007ff9`fcc8d000   C:\WINDOWS\System32\msvcp_win.dll
+ModLoad: 00007ff9`fc910000 00007ff9`fca10000   C:\WINDOWS\System32\ucrtbase.dll
+ModLoad: 00007ff9`fd6a0000 00007ff9`fd840000   C:\WINDOWS\System32\USER32.dll
+ModLoad: 00007ff9`fd990000 00007ff9`fdce6000   C:\WINDOWS\System32\combase.dll
+ModLoad: 00007ff9`fe7d0000 00007ff9`fe8fb000   C:\WINDOWS\System32\RPCRT4.dll
+ModLoad: 00007ff9`fe030000 00007ff9`fe0de000   C:\WINDOWS\System32\shcore.dll
+ModLoad: 00007ff9`fddd0000 00007ff9`fde6e000   C:\WINDOWS\System32\msvcrt.dll
+ModLoad: 00007ff9`f1f70000 00007ff9`f220b000   C:\WINDOWS\WinSxS\amd64_microsoft.windows.common-controls_6595b64144ccf1df_6.0.19041.488_none_ca04af081b815d21\COMCTL32.dll
+(4bc.1df4): Break instruction exception - code 80000003 (first chance)
+ntdll!LdrpDoDebuggerBreak+0x30:
+00007ff9`ff1606d0 cc              int     3
+</pre>
+</div>
+</section>
+
+<section>
+<div class="subsection">
+<h3>Debugger process architecture</h3>
+<p>
+Before we proceed any further let us quickly review the WinDBG Preview process architecture. 
+WinDBG Preview is a UWP application that has very limited access to the system, certainly not enough to debug a process. 
+Hence the WinDBG UI and the WinDBG debugger workhorse are in separate processes that communicate using the named pipe inter-process communication (IPC) mechanism.
+The WinDBG Preview UI process is DBG.X.Shell.exe which connects over a named pipe to EngHost.exe which is the process responsible for attaching or launching the process being debugged.
+</p>
+<figure class="figure">
+<img class="figure-img img-fluid" src="./CodeMachine - WinDBG quick start tutorial_files/figure_windbg_quickstart_processes.png" alt="figure#3"> 
+<figcaption class="figure-caption">WinDBG Process Hierarchy</figcaption>
+</figure>
+<p>
+The following command displays the command-line options that were passed to the debugger process (EngHost.exe). 
+The named pipe with the name <q>DbgX_c07674536fa94c33bdf0af63c782f816</q> is used by DbgX.Shell.exe to communicate with EngHost.exe.
+</p>
+<pre>0:000&gt; vercommand
+command line: '"C:\Program Files\WindowsApps\Microsoft.WinDbg_1.2007.6001.0_neutral__8wekyb3d8bbwe\amd64\EngHost.exe" npipe:pipe=DbgX_c07674536fa94c33bdf0af63c782f816,password=9cd080f41b98 "C:\Program Files\WindowsApps\Microsoft.WinDbg_1.2007.6001.0_neutral__8wekyb3d8bbwe\amd64" "C:\ProgramData\Dbg"'
+</pre>
+</div>
+</section>
+
+<section>
+<div class="subsection">
+<h3>Performing some initial investigation</h3>
+<p>
+Let us obtain some basic information about the OS version and the process being debugged. 
+The Show Target Computer Version (vertarget) command displays information about the Windows version and information debug session time.
+</p>
+<pre>0:000&gt; vertarget
+Windows 10 Version 19042 MP (4 procs) Free x64
+Product: WinNt, suite: SingleUserTS
+Edition build lab: 19041.1.amd64fre.vb_release.191206-1406
+Build layer:            -&gt; 
+Build layer:            -&gt; 
+Build layer:            -&gt; 
+Machine Name:
+Debug session time: Sun Dec  6 00:16:24.332 2020 (UTC - 8:00)
+System Uptime: 0 days 17:37:21.507
+Process Uptime: 0 days 0:03:22.680
+    Kernel time: 0 days 0:00:00.000
+    User time: 0 days 0:00:00.000
+</pre>
+<p>
+The (vertarget) command showed that there are 4 CPUs (cores) on the system, let's find out a little bit more about the Family (F), Model (M), Stepping (S), and the speed of the CPUs/cores in the system using the (!cpuid) debugger extension command. 
+Note that the (!) symbol before the (!cpuid) command denotes that this command is not supported natively by the debugger rather it resides in a debugger extension DLL.
+</p>
+<pre>0:000&gt; !cpuid
+CP  F/M/S  Manufacturer     MHz
+    0  6,14,3                  2607
+    1  6,14,3                  2607
+    2  6,14,3                  2607
+    3  6,14,3                  2607
+</pre>
+<p>
+Prior to starting WinDBG, we had set up the environment variable _NT_SYMBOL_PATH to the symbol path. 
+WinDBG should have automatically used the symbol path set in this variable. Let us verify that using the Set Symbol Path (.sympath) command. 
+Note that the (.) in front of the command denotes that this is a meta-command. Most such commands cause a change in the behavior of the debugger. 
+In this specific case, the (.sympath) command could be used with the (+) option to append another path to the current symbol path.
+</p>
+<pre>0:000&gt; .sympath 
+Symbol search path is: SRV*C:\symsrv*https://msdl.microsoft.com/download/symbols
+Expanded Symbol search path is: srv*c:\symsrv*https://msdl.microsoft.com/download/symbols
+
+************* Path validation summary **************
+Response                         Time (ms)     Location
+Deferred                                       SRV*C:\symsrv*https://msdl.microsoft.com/download/symbols
+</pre>
+<p>
+To find the path to the symbol file (.PDB) that the debugger is using for notepad we can use the debugger extension command (!lmi). 
+This command parses the PE headers and displays information retrieved from the PE file's Debug Directory.
+</p>
+<pre>0:000&gt; !lmi notepad
+Loaded Module Info: [notepad] 
+            Module: notepad
+    Base Address: 00007ff6f8830000
+        Image Name: notepad.exe
+    Machine Type: 34404 (X64)
+        Time Stamp: d686c2e9 (This is a reproducible build file hash, not a true timestamp)
+            Size: 38000
+        CheckSum: 3e7ca
+Characteristics: 22  
+Debug Data Dirs: Type  Size     VA  Pointer
+                CODEVIEW    24, 2b604,   2a404 RSDS - GUID: {17F6F0A8-0039-D425-B201-69009E11D822}
+                Age: 1, Pdb: notepad.pdb
+                    POGO   49c, 2b628,   2a428 [Data not mapped]
+                REPRO    24, 2bac4,   2a8c4 Reproducible build[Data not mapped]
+        Image Type: FILE     - Image read successfully from debugger.
+                    C:\Windows\System32\notepad.exe
+    Symbol Type: PDB      - Symbols loaded successfully from symbol server.
+                    c:\symsrv\notepad.pdb\17F6F0A80039D425B20169009E11D8221\notepad.pdb
+    Load Report: public symbols , not source indexed 
+                    c:\symsrv\notepad.pdb\17F6F0A80039D425B20169009E11D8221\notepad.pdb
+</pre>
+</div>
+</section>
+
+<section>
+<div class="subsection">
+<h3>Process and Thread Status</h3>
+
+<p>
+The Process Status (|) command can be used to find the process ID and the process name being debugged.
+</p>
+
+<pre>0:000&gt; |
+.  0	id: 4bc	create	name: notepad.exe
+</pre>
+
+<p>
+When WinDBG is being  used as a user-mode debugger, the Thread Status (~) command  displays information for all threads in the current process. 
+At this time, there is just a single thread in the notepad process and the status of the thread is shown below. 
+This information includes the Thread ID  = 0x1df4, the address of the TEB of the thread 0x000000e979a72000, the suspend count of the thread and information about freeze state of the thread.
+</p>
+
+<pre>0:000&gt; ~
+.  0  Id: 4bc.1df4 Suspend: 1 Teb: 000000e9`79a72000 Unfrozen
+</pre>
+</div>
+</section>
+
+<section>
+<div class="subsection">
+<h3>Module Information</h3>
+<p>
+To find the virtual address at which any module is loaded in memory, we can run the (List Loaded Modules) (lm) command. 
+Running the lm command by itself will display the starting and ending address range of where each module is loaded in notepad.exe process address space.
+/p&gt;
+
+</p><pre>0:000&gt; lm
+start             end                 module name
+00007ff6`f8830000 00007ff6`f8868000   notepad    (pdb symbols)          c:\symsrv\notepad.pdb\17F6F0A80039D425B20169009E11D8221\notepad.pdb
+00007ff9`f1f70000 00007ff9`f220b000   COMCTL32   (deferred)             
+00007ff9`fc910000 00007ff9`fca10000   ucrtbase   (deferred)             
+00007ff9`fca90000 00007ff9`fcb99000   gdi32full   (deferred)             
+00007ff9`fcbf0000 00007ff9`fcc8d000   msvcp_win   (deferred)             
+00007ff9`fcc90000 00007ff9`fccb2000   win32u     (deferred)             
+00007ff9`fce20000 00007ff9`fd0e9000   KERNELBASE   (deferred)             
+00007ff9`fd6a0000 00007ff9`fd840000   USER32     (deferred)          
+00007ff9`fd840000 00007ff9`fd8fd000   KERNEL32   (pdb symbols)          
+00007ff9`fd960000 00007ff9`fd990000   IMM32      (deferred)             
+00007ff9`fd990000 00007ff9`fdce6000   combase    (deferred)  
+00007ff9`fddd0000 00007ff9`fde6e000   msvcrt     (deferred)             
+00007ff9`fe030000 00007ff9`fe0de000   shcore     (deferred)             
+00007ff9`fe5a0000 00007ff9`fe5ca000   GDI32      (deferred)             
+00007ff9`fe7d0000 00007ff9`fe8fb000   RPCRT4     (deferred)             
+00007ff9`ff090000 00007ff9`ff286000   ntdll      (pdb symbols)          c:\symsrv\ntdll.pdb\1EB9FACB04C73C5DEA7160764CD333D01\ntdll.pdb
+</pre>
+
+<p>
+Running the (lm) command with the (m) option can be used to restrict the output to a specific module. 
+We use this to retrieve the VA range assigned to the module notepad.exe.
+</p>
+
+<pre>0:000&gt; lm m notepad
+start             end                 module name
+00007ff6`f8830000 00007ff6`f8868000   notepad    (deferred)             
+</pre>
+
+<p>
+To obtain version information of a module, which is stored in the resources (.rsrc) section use the (v) option of the lm command. 
+</p>
+
+<pre>0:000&gt; lm v m notepad
+start             end                 module name
+00007ff6`f8830000 00007ff6`f8868000   notepad    (pdb symbols)          c:\symsrv\notepad.pdb\17F6F0A80039D425B20169009E11D8221\notepad.pdb
+    Loaded symbol image file: C:\Windows\System32\notepad.exe
+    Image path: notepad.exe
+    Image name: notepad.exe
+    Image was built with /Brepro flag.
+    Timestamp:        D686C2E9 (This is a reproducible build file hash, not a timestamp)
+    CheckSum:         0003E7CA
+    ImageSize:        00038000
+    File version:     10.0.19041.488
+    Product version:  10.0.19041.488
+    File flags:       0 (Mask 3F)
+    File OS:          40004 NT Win32
+    File type:        1.0 App
+    File date:        00000000.00000000
+    Translations:     0409.04b0
+    Information from resource tables:
+        CompanyName:      Microsoft Corporation
+        ProductName:      Microsoft® Windows® Operating System
+        InternalName:     Notepad
+        OriginalFilename: NOTEPAD.EXE
+        ProductVersion:   10.0.19041.488
+        FileVersion:      10.0.19041.488 (WinBuild.160101.0800)
+        FileDescription:  Notepad
+        LegalCopyright:   © Microsoft Corporation. All rights reserved.
+</pre>
+
+<p>
+In WinDBG, the name of any module is treated as an expression that evaluates to the start VA at which the module is loaded into memory. 
+If we use the MASM expression evaluator operator (?) on the module "notepad", it displays the start VA of the module.
+</p>
+
+<pre>0:000&gt; ? notepad
+Evaluate expression: 140698708017152 = 00007ff6`f8830000
+</pre>
+</div>
+</section>
+
+<section>
+<div class="subsection">
+<h3>Setting an execution breakpoint</h3>
+
+<p>
+At this point, we have found a reasonable bit of information about the process being debugged. 
+We will now set a breakpoint on the main entry point of the PE file of notepad.exe. 
+To do so, we must find the symbol that represents the main entry point of notepad.exe. 
+To obtain a list of all such symbols we use the Examine Symbol (x) command which accepts wildcards and therefore makes it quite convenient to obtain a list of functions that end with the word <q>main</q>. 
+The parameter we are passing to the (x) command consists of - the name of the module (without the extension), the exclamation sign (!) as the separator followed by the name of the symbols (containing wildcards).
+</p>
+
+<pre>0:000&gt; x notepad!*main
+00007ff6`f883b090 notepad!wWinMain (wWinMain)
+</pre>
+
+<p>
+In the above output, the first column displays the address of the symbol at which the symbol resides followed by the complete name of the symbol that matched the given wildcard. 
+</p>
+
+<p>
+The Set Breakpoint (bp) command has the ability to set a breakpoint on either a symbol name or an address. We use it to set a breakpoint on the main entry point of notepad.exe.
+</p>
+
+<pre>0:000&gt; bp notepad!wWinMain
+</pre>
+
+<p>
+Let us verify that the breakpoint is indeed set appropriately using the Breakpoint List (bl) command. 
+</p>
+
+<pre>0:000&gt; bl
+    0 e 00007ff6`f883b090     0001 (0001)  0:**** notepad!wWinMain
+</pre>
+
+<p>
+It is noteworthy that the bp command was able to resolve the symbol notepad!wWinMain to the appropriate address i.e. 00007ff6`f883b090 and was able to set an execution breakpoint and enable it as indicated by the (e) in the output above.
+</p>
+
+<p>
+Now that we have the breakpoint set, let us continue executing the process notepad.exe using the  Go (g) command.
+</p>
+
+<pre>0:000&gt; g
+ModLoad: 00007ff9`fd960000 00007ff9`fd990000   C:\WINDOWS\System32\IMM32.DLL
+Breakpoint 0 hit
+notepad!wWinMain:
+00007ff6`f883b090 488bc4          mov     rax,rsp
+</pre>
+
+<p>
+As soon as we continue execution, the function we set the breakpoint on gets called, the breakpoint triggers and WinDBG gives us back control of the process.
+</p>
+</div>
+</section>
+
+<section>
+<div class="subsection">
+<h3>Hitting the breakpoint</h3>
+
+<p>
+WinDBG has stopped the execution of notepad.exe at the first instruction of the function notepad!wWinMain.
+Let us ascertain that by retrieving the value of all the x64 CPU registers.
+The values in the registers would also assist us with retrieving the parameters that were passed to this function since on x64 the first 4 parameters are passed in CPU registers.
+To retrieve the CPU registers we use the Registers (r) command.
+</p>
+
+<pre>0:000&gt; r
+rax=0000023771d528b6 rbx=000000000000000a rcx=00007ff6f8830000
+rdx= rsi=0000000000000000 rdi=0000000000000000
+rip=00007ff6f883b090 rsp=000000e9799dfd48 rbp=0000000000000000
+    r8=0000023771d528b6  r9=000000000000000a r10=00000fff3f9cdb1f
+r11=0002002080000000 r12=0000000000000000 r13=0000000000000000
+r14=0000000000000000 r15=0000000000000000
+iopl=0         nv up ei pl zr na po nc
+cs=0033  ss=002b  ds=002b  es=002b  fs=0053  gs=002b             efl=00000246
+notepad!wWinMain:
+00007ff6`f883b090 488bc4          mov     rax,rsp
+</pre>
+
+<p>
+The above output confirms that the address in the instruction pointer (RIP) indeed points to the first instruction of the function notepad!wWinMain.
+The prototype of the function wWinMain is as shown below along with the CPU registers that contain the respective parameters.
+</p>
+
+<pre>int WINAPI wWinMain(
+    HINSTANCE hInstance,     // rcx
+    HINSTANCE hPrevInstance, // rdx
+    PWSTR lpCmdLine,         // r8
+    int nCmdShow );          // r9
+</pre>
+
+<p>
+From the output of the (r) command the value of hInstance = 0x00007ff6f8830000, hPrevInstance = 0x 0000000000000000 (NULL), lpCmdLine=0x0000023771d528b6, nCmdShow=000000000000000a (SW_SHOWDEFAULT). 
+</p>
+</div>
+</section>
+
+<section>
+<div class="subsection">
+<h3>Displaying stack contents</h3>
+
+<p>
+The RSP register points to the top of the stack of the current thread. For a 64-bit process, each value stored on the stack is 64-bits in size i.e. a pointer-sized value.
+To display the contents of memory starting at the address in the RSP register we use the (dp) variant of the Display Memory command. 
+</p>
+<p>
+Please note that the (@) sign in front of a register is required if the current expression evaluator is C++, but we use it by default just as best practice. 
+</p>
+
+<pre>0:000&gt; dp @rsp
+000000e9`799dfd48  00007ff6`f8853b86 00000000`00000000
+000000e9`799dfd58  00000000`00000000 00000000`00000000
+000000e9`799dfd68  00000000`00000000 00000000`00000000
+000000e9`799dfd78  00000000`00000000 00000000`00000000
+000000e9`799dfd88  00007ff9`fd857034 00000000`00000000
+000000e9`799dfd98  00000000`00000000 00000000`00000000
+000000e9`799dfda8  00000000`00000000 00000000`00000000
+000000e9`799dfdb8  00007ff9`ff0dd0d1 00000000`00000000
+</pre>
+
+<p>
+By default, the (dp) command displays 64-bit values in two columns. We can change that using the column (/c) option to the (dp) command to display the contents of memory in 4 columns, as shown below.
+</p>
+
+<pre>0:000&gt; dp /c 4 @rsp
+000000e9`799dfd48  00007ff6`f8853b86 00000000`00000000 00000000`00000000 00000000`00000000
+000000e9`799dfd68  00000000`00000000 00000000`00000000 00000000`00000000 00000000`00000000
+000000e9`799dfd88  00007ff9`fd857034 00000000`00000000 00000000`00000000 00000000`00000000
+000000e9`799dfda8  00000000`00000000 00000000`00000000 00007ff9`ff0dd0d1 00000000`00000000
+</pre>
+
+<p>
+To display more than the default 16 values, we can use the object count (L) option followed by the number of values to display.
+</p>
+
+<pre>0:000&gt; dp /c 4 @rsp L 20
+000000e9`799dfd48  00007ff6`f8853b86 00000000`00000000 00000000`00000000 00000000`00000000
+000000e9`799dfd68  00000000`00000000 00000000`00000000 00000000`00000000 00000000`00000000
+000000e9`799dfd88  00007ff9`fd857034 00000000`00000000 00000000`00000000 00000000`00000000
+000000e9`799dfda8  00000000`00000000 00000000`00000000 00007ff9`ff0dd0d1 00000000`00000000
+000000e9`799dfdc8  00000000`00000000 00000000`00000000 00000000`00000000 00000000`00000000
+000000e9`799dfde8  00000000`00000000 00000000`00000000 00000000`00000000 00000000`00000000
+000000e9`799dfe08  00000000`00000000 000004e8`fffffb30 000004d0`fffffb30 00000000`00000019
+000000e9`799dfe28  00000000`00000000 00000000`00000000 00000000`00000000 00000000`00000000
+</pre>
+
+<p>
+And last but not the least, if we would like WinDBG to automatically attempt to  map each one of the displayed values to symbols the (dps) variant of the Display Referenced Memory command can be used which in case of the stack would display all the return addresses as the map to symbols representing addresses within the functions that have been pushed on the stack by call instructions.
+</p>
+
+<pre>0:000&gt; dps @rsp
+000000e9`799dfd48  00007ff6`f8853b86 notepad!__scrt_common_main_seh+0x106
+000000e9`799dfd50  00000000`00000000
+000000e9`799dfd58  00000000`00000000
+000000e9`799dfd60  00000000`00000000
+000000e9`799dfd68  00000000`00000000
+000000e9`799dfd70  00000000`00000000
+000000e9`799dfd78  00000000`00000000
+000000e9`799dfd80  00000000`00000000
+000000e9`799dfd88  00007ff9`fd857034 KERNEL32!BaseThreadInitThunk+0x14
+000000e9`799dfd90  00000000`00000000
+000000e9`799dfd98  00000000`00000000
+000000e9`799dfda0  00000000`00000000
+000000e9`799dfda8  00000000`00000000
+000000e9`799dfdb0  00000000`00000000
+000000e9`799dfdb8  00007ff9`ff0dd0d1 ntdll!RtlUserThreadStart+0x21
+000000e9`799dfdc0  00000000`00000000
+</pre>
+
+<p>
+Now that we have learned how to display the raw contents of the stack using the RSP register, let us view the stack the way it is meant to be displayed by the debuggers using the Display Stack Backtrace (k) command and its variants.
+</p>
+
+<pre>0:000&gt; k
+Child-SP          RetAddr               Call Site
+000000e9`799dfd48 00007ff6`f8853b86     notepad!wWinMain
+000000e9`799dfd50 00007ff9`fd857034     notepad!__scrt_common_main_seh+0x106
+000000e9`799dfd90 00007ff9`ff0dd0d1     KERNEL32!BaseThreadInitThunk+0x14
+000000e9`799dfdc0 00000000`00000000     ntdll!RtlUserThreadStart+0x21
+</pre>
+
+<p>
+The information displayed is the call chain from the start of this thread's execution (ntdll!RtlUserThreadStart) all the way to the current function (notepad!wWinMain) on which we set our breakpoint. Let's dig a little deeper into the displayed call stack.
+</p>
+
+<p>
+Each line displayed above represents the stack frame of a single function.
+The frame at the bottom is the least recent frame and the frame on top is the most recent frame.
+</p>
+
+<p>
+The values listed under Child-SP are the values of stack-pointer (RSP) register for the frame.
+This is the value of the RSP register right after the prolog of the function listed under the Call Site column has finished execution.
+This value in the RSP register remains static throughout the function body. Local variables and stack-based parameters to the function are accessed using this value in RSP.
+</p>
+
+<p>
+The RetAddr is the return address that the current function i.e. the function listed under Call Site will return to once the function has finished execution.
+This address corresponds to the location displayed in the next (lower) stack frame.
+For example, running the List Nearest Symbols (ln) command on the RetAddr in the topmost frame maps to the function and offset listed under Call Site in the frame below the topmost frame.
+</p>
+
+<pre>0:000&gt; ln 00007ff6`f8853b86 
+(00007ff6`f8853a80)   notepad!__scrt_common_main_seh+0x106   |  (00007ff6`f8853c00)   notepad!wWinMainCRTStartup
+</pre>
+
+<p>
+Now that we understand how to interpret the information displayed by the (k) command, let us try some of its variants.
+To include the frame numbers in the stack display use the (kn) variant of the Display Stack Backtrace (k) command.
+</p>
+
+<pre>0:000&gt; kn
+    # Child-SP          RetAddr               Call Site
+00 000000e9`799dfd48 00007ff6`f8853b86     notepad!wWinMain
+01 000000e9`799dfd50 00007ff9`fd857034     notepad!__scrt_common_main_seh+0x106
+02 000000e9`799dfd90 00007ff9`ff0dd0d1     KERNEL32!BaseThreadInitThunk+0x14
+03 000000e9`799dfdc0 00000000`00000000     ntdll!RtlUserThreadStart+0x21
+</pre>
+
+<p>
+To display a clean stack trace which only lists the module and function names use the (kc) variant of the Display Stack Backtrace (k) command. 
+</p>
+
+<pre>0:000&gt; kc
+Call Site
+notepad!wWinMain
+notepad!__scrt_common_main_seh
+KERNEL32!BaseThreadInitThunk
+ntdll!RtlUserThreadStart
+</pre>
+
+<p>
+And finally, to display the verbose stack trace that includes the stack-based parameters passed to every function on the stack, use the (kv) variant of the Display Stack Backtrace (k) command.
+It is critical to note that as per the x64 calling convention, the first four parameters to a function are passed via CPU register and not through the stack.
+Therefore, the values displayed under "Args to Child" which are values on the stack do not represent the actual parameters to the function and using them as such can be quite misleading.
+Due to this, the (kv) command has very limited use on x64.
+</p>
+
+<pre>0:000&gt; kv
+Child-SP          RetAddr               : Args to Child                                                           : Call Site
+000000e9`799dfd48 00007ff6`f8853b86     : 00000000`00000000 00000000`00000000 00000000`00000000 00000000`00000000 : notepad!wWinMain
+000000e9`799dfd50 00007ff9`fd857034     : 00000000`00000000 00000000`00000000 00000000`00000000 00000000`00000000 : notepad!__scrt_common_main_seh+0x106
+000000e9`799dfd90 00007ff9`ff0dd0d1     : 00000000`00000000 00000000`00000000 00000000`00000000 00000000`00000000 : KERNEL32!BaseThreadInitThunk+0x14
+000000e9`799dfdc0 00000000`00000000     : 00000000`00000000 00000000`00000000 00000000`00000000 00000000`00000000 : ntdll!RtlUserThreadStart+0x21
+</pre>
+</div>
+</section>
+
+<section>
+<div class="subsection">
+<h3>Displaying strings</h3>
+
+<p>
+Now we look at some WinDBG commands that can be used to display different types of strings used by applications, such as ASCII strings, wide char strings, and Unicode strings.
+One relatively straightforward way of finding such strings is to look for symbols in modules such as notepad.exe or NTDLL.dll that represent data values as opposed to functions and whose names are indicative of them representing strings.
+The list of such variable names can be found using the Examine Symbols (x) command with the (/d) option. We also add the (/a) option which will display the output in ascending order of addresses
+The following output has been edited for brevity.
+</p>
+
+<pre>0:000&gt; x /a /d ntdll!*
+00007ff9`ff1ac000 ntdll!RtlpSlashSlashDot = &lt;no type information&gt;
+00007ff9`ff1ac010 ntdll!RtlpDosCONOUTDevice = &lt;no type information&gt;
+00007ff9`ff1ac020 ntdll!RtlpDosPRNDevice = &lt;no type information&gt;
+00007ff9`ff1ac030 ntdll!RtlpDosNULDevice = &lt;no type information&gt;
+00007ff9`ff1ac040 ntdll!RtlpDosAUXDevice = &lt;no type information&gt;
+. . . [REDACTED]
+</pre>
+
+<p>
+Using the above technique on notepad.exe we obtain the symbol notepad!_sz_ADVAPI32_dll.
+The presence of 'sz' in the name of the data variable implies that the memory contains a NULL-terminated ASCII string.
+With this assumption, we run the (da) variant of the Display Memory command.
+</p>
+
+<pre>0:000&gt; da notepad!_sz_ADVAPI32_dll
+00007ff6`f88573a0  "ADVAPI32.dll"
+</pre>
+
+<p>
+Again, using the same symbols listing technique listed above, we obtain the symbols ntdll!SlashSystem32SlashString.
+Unlike the previous case, the name is not suggestive as to the type of string this data variable represents.
+It may be an ASCII string, wide char string, or Unicode string.
+When the format of the data in memory is not known in advance, the (dc) variant of the Display Memory command can be used to display the contents of that memory in both DWORD (32-bit) format and as ASCII characters provided the characters are printable. 
+</p>
+
+<pre>0:000&gt; dc ntdll!SlashSystem32SlashString
+00007ff9`ff1ac1e0  00160014 00000000 ff1b75c8 00007ff9  .........u......
+00007ff9`ff1ac1f0  001a0018 00000000 ff1b6fd0 00007ff9  .........o......
+00007ff9`ff1ac200  ff0d08e0 00007ff9 ff0fd2c0 00007ff9  ................
+00007ff9`ff1ac210  00000000 00000000 ff114580 00007ff9  .........E......
+00007ff9`ff1ac220  ff0cea30 00007ff9 ff1a1c70 00007ff9  0.......p.......
+00007ff9`ff1ac230  ff0d2950 00007ff9 ff0fd2c0 00007ff9  P)..............
+00007ff9`ff1ac240  ff114cf0 00007ff9 ff114580 00007ff9  .L.......E......
+00007ff9`ff1ac250  ff0d4700 00007ff9 ff0fd2c0 00007ff9  .G..............
+</pre>
+
+<p>
+By observing the contents of the memory location and recognizing the pattern - 16-bit integer, 16-bit integer, 32-bit NULL, 64-bit address, we can assume that we have a Unicode string header in memory.
+To ascertain this let us display the data type for the Unicode string header using the Display Type (dt) command.
+</p>
+
+<pre>0:000&gt; dt ntdll!_UNICODE_STRING
+    +0x000 Length           : Uint2B
+    +0x002 MaximumLength    : Uint2B
+    +0x008 Buffer           : Ptr64 Wchar
+</pre>
+
+<p>
+We can clearly see that the contents of memory match the fields of the UNICODE_STIRNG structure.
+So we go one step further and typecast the contents of memory at the symbol ntdll!SlashSystem32SlashString (0x00007ff9`ff1ac1e0) to the UNICODE_STIRNG structure.
+</p>
+
+<pre>0:000&gt; dt ntdll!_UNICODE_STRING 00007ff9`ff1ac1e0
+    "\SYSTEM32\"
+    +0x000 Length           : 0x14
+    +0x002 MaximumLength    : 0x16
+    +0x008 Buffer           : 0x00007ff9`ff1b75c8  "\SYSTEM32\"
+</pre>
+
+<p>
+Now that we have confirmed that ntdll!SlashSystem32SlashString contains a Unicode string header, let us go ahead and display the string with the (dS) variant of the Display String commands.
+</p>
+
+<pre>0:000&gt; dS ntdll!SlashSystem32SlashString
+00007ff9`ff1b75c8  "\SYSTEM32\"
+</pre>
+
+<p>
+Instead of using the address of the UNICODE_STRING structure itself, we can also use the address in the Buffer field of the UNICODE_STRING structure (i.e. 0x00007ff9`ff1b75c8) to display the string. To do this we use the (du) variant of the Display Memory command. Please note that the wide char string must be NULL-terminated.
+</p>
+
+<pre>0:000&gt; du 0x00007ff9`ff1b75c8
+00007ff9`ff1b75c8  "\SYSTEM32\"
+</pre>
+</div>
+</section>
+
+<section>
+<div class="subsection">
+<h3>Displaying Memory Contents</h3>
+
+<p>
+Now that we know that the memory at the symbol notepad!_sz_ADVAPI32_dll contains an ASCII string, let us display the same memory in various other formats such as 8-bit byte (db), 16-bit word (dw), 32-bit double-word (dd) and 64-bit quad-word (dq).
+Please note that only the (db) command displayed the output in ASCII as well as hexadecimal numbers.
+</p>
+
+<p>
+Display as bytes (char).
+</p>
+
+<pre>0:000&gt; db notepad!_sz_ADVAPI32_dll
+00007ff6`f88573a0  41 44 56 41 50 49 33 32-2e 64 6c 6c 00 00 00 00  ADVAPI32.dll....
+00007ff6`f88573b0  22 05 93 19 01 00 00 00-a8 c9 02 00 00 00 00 00  "...............
+00007ff6`f88573c0  00 00 00 00 01 00 00 00-b0 c9 02 00 20 00 00 00  ............ ...
+00007ff6`f88573d0  00 00 00 00 05 00 00 00-00 00 00 00 00 00 00 00  ................
+00007ff6`f88573e0  61 00 70 00 69 00 2d 00-6d 00 73 00 2d 00 77 00  a.p.i.-.m.s.-.w.
+00007ff6`f88573f0  69 00 6e 00 2d 00 63 00-6f 00 72 00 65 00 2d 00  i.n.-.c.o.r.e.-.
+00007ff6`f8857400  73 00 79 00 6e 00 63 00-68 00 2d 00 6c 00 31 00  s.y.n.c.h.-.l.1.
+00007ff6`f8857410  2d 00 32 00 2d 00 30 00-2e 00 64 00 6c 00 6c 00  -.2.-.0...d.l.l.
+</pre>
+
+<p>
+Display as words (short).
+</p>
+
+<pre>0:000&gt; dw notepad!_sz_ADVAPI32_dll
+00007ff6`f88573a0  4441 4156 4950 3233 642e 6c6c 0000 0000
+00007ff6`f88573b0  0522 1993 0001 0000 c9a8 0002 0000 0000
+00007ff6`f88573c0  0000 0000 0001 0000 c9b0 0002 0020 0000
+00007ff6`f88573d0  0000 0000 0005 0000 0000 0000 0000 0000
+00007ff6`f88573e0  0061 0070 0069 002d 006d 0073 002d 0077
+00007ff6`f88573f0  0069 006e 002d 0063 006f 0072 0065 002d
+00007ff6`f8857400  0073 0079 006e 0063 0068 002d 006c 0031
+00007ff6`f8857410  002d 0032 002d 0030 002e 0064 006c 006c
+</pre>
+
+<p>
+Display as double-words (long).
+</p>
+
+<pre>0:000&gt; dd notepad!_sz_ADVAPI32_dll
+00007ff6`f88573a0  41564441 32334950 6c6c642e 00000000 
+00007ff6`f88573b0  19930522 00000001 0002c9a8 00000000 
+00007ff6`f88573c0  00000000 00000001 0002c9b0 00000020 
+00007ff6`f88573d0  00000000 00000005 00000000 00000000 
+00007ff6`f88573e0  00700061 002d0069 0073006d 0077002d 
+00007ff6`f88573f0  006e0069 0063002d 0072006f 002d0065 
+00007ff6`f8857400  00790073 0063006e 002d0068 0031006c 
+00007ff6`f8857410  0032002d 0030002d 0064002e 006c006c 
+</pre>
+
+<p>
+Display as quad-words (__int64).
+</p>
+
+<pre>0:000&gt; dq notepad!_sz_ADVAPI32_dll
+00007ff6`f88573a0  32334950`41564441  00000000`6c6c642e
+00007ff6`f88573b0  00000001`19930522  00000000`0002c9a8
+00007ff6`f88573c0  00000001`00000000  00000020`0002c9b0
+00007ff6`f88573d0  00000005`00000000  00000000`00000000
+00007ff6`f88573e0  002d0069`00700061  0077002d`0073006d
+00007ff6`f88573f0  0063002d`006e0069  002d0065`0072006f
+00007ff6`f8857400  0063006e`00790073  0031006c`002d0068
+00007ff6`f8857410  0030002d`0032002d  006c006c`0064002e
+</pre>
+</div>
+</section>
+
+<section>
+<div class="subsection">
+<h3>Navigating in assembler</h3>
+
+<p>
+Although there are better reverse engineering tools than WinDBG such as <a href="https://ghidra-sre.org/">Ghidra</a>, WinDBG does provide the ability to navigate through assembler functions.
+The most glaring feature missing in WinDBG is the ability to perform cross-referencing. 
+</p>
+
+<p>
+To unassemble the instructions starting at the current instruction pointer (RIP) we use the Unassemble (u) command and the RIP register as the address parameter.
+The (u) command uses a linear scan algorithm to disassemble the opcodes for the next 8 instructions.
+</p>
+
+<pre>0:000&gt; u @rip
+notepad!wWinMain:
+00007ff6`f883b090 488bc4          mov     rax,rsp
+00007ff6`f883b093 48895808        mov     qword ptr [rax+8],rbx
+00007ff6`f883b097 48897010        mov     qword ptr [rax+10h],rsi
+00007ff6`f883b09b 48897818        mov     qword ptr [rax+18h],rdi
+00007ff6`f883b09f 4c896020        mov     qword ptr [rax+20h],r12
+00007ff6`f883b0a3 55              push    rbp
+00007ff6`f883b0a4 4156            push    r14
+00007ff6`f883b0a6 4157            push    r15
+</pre>
+
+<p>
+To unassemble the instructions backward we use the (ub) variant of the Unassemble command and again specify the RIP register as the address parameter to disassemble 8 instructions prior to the address in the RIP register.
+The following listing shows a series of INT 3 instructions before the start of the function notepad!wWinMain.
+These INT 3 instructions were added by the compiler to ensure that notepad!wWinMain starts at a 16 (0x10) byte boundary and provides a small code cave that can be potentially used for inline hooking.
+</p>
+
+<pre>0:000&gt; ub @rip
+notepad!IsElevated+0x80:
+00007ff6`f883b088 cc              int     3
+00007ff6`f883b089 cc              int     3
+00007ff6`f883b08a cc              int     3
+00007ff6`f883b08b cc              int     3
+00007ff6`f883b08c cc              int     3
+00007ff6`f883b08d cc              int     3
+00007ff6`f883b08e cc              int     3
+00007ff6`f883b08f cc              int     3
+</pre>
+
+<p>
+To disassemble more than 8 instructions we can specify an address range consisting of an address (RIP) and object count (L) followed by the number of instructions to display.
+</p>
+
+<pre>0:000&gt; ub @rip L10
+notepad!IsElevated+0x65:
+00007ff6`f883b06d 85c0            test    eax,eax
+00007ff6`f883b06f 0f455c2448      cmovne  ebx,dword ptr [rsp+48h]
+00007ff6`f883b074 48ff150dba0100  call    qword ptr [notepad!_imp_CloseHandle (00007ff6`f8856a88)]
+00007ff6`f883b07b 0f1f440000      nop     dword ptr [rax+rax]
+00007ff6`f883b080 8bc3            mov     eax,ebx
+00007ff6`f883b082 4883c430        add     rsp,30h
+00007ff6`f883b086 5b              pop     rbx
+00007ff6`f883b087 c3              ret
+00007ff6`f883b088 cc              int     3
+00007ff6`f883b089 cc              int     3
+00007ff6`f883b08a cc              int     3
+00007ff6`f883b08b cc              int     3
+00007ff6`f883b08c cc              int     3
+00007ff6`f883b08d cc              int     3
+00007ff6`f883b08e cc              int     3
+00007ff6`f883b08f cc              int     3
+</pre>
+
+<p>
+Both the (u) and the (ub) variants use a linear sweep algorithm to disassemble a function and as such are not aware of function boundaries or basic blocks within functions.
+The Unassemble Function (uf) command on the other hand uses a recursive algorithm that evaluates every basic block within a function to find other basic blocks.
+The following output has been edited for brevity.
+</p>
+
+<pre>0:000&gt; uf @rip 
+notepad!wWinMain:
+00007ff6`f883b090 488bc4          mov     rax,rsp
+00007ff6`f883b093 48895808        mov     qword ptr [rax+8],rbx
+00007ff6`f883b097 48897010        mov     qword ptr [rax+10h],rsi
+00007ff6`f883b09b 48897818        mov     qword ptr [rax+18h],rdi
+00007ff6`f883b09f 4c896020        mov     qword ptr [rax+20h],r12
+00007ff6`f883b0a3 55              push    rbp
+00007ff6`f883b0a4 4156            push    r14
+00007ff6`f883b0a6 4157            push    r15
+00007ff6`f883b0a8 488d68a1        lea     rbp,[rax-5Fh]
+00007ff6`f883b0ac 4881ec90000000  sub     rsp,90h
+. . . 
+[REDACTED]
+. . .
+00007ff6`f883b427 8b451f          mov     eax,dword ptr [rbp+1Fh]
+00007ff6`f883b42a 4c8d9c2490000000 lea     r11,[rsp+90h]
+00007ff6`f883b432 498b5b20        mov     rbx,qword ptr [r11+20h]
+00007ff6`f883b436 498b7328        mov     rsi,qword ptr [r11+28h]
+00007ff6`f883b43a 498b7b30        mov     rdi,qword ptr [r11+30h]
+00007ff6`f883b43e 4d8b6338        mov     r12,qword ptr [r11+38h]
+00007ff6`f883b442 498be3          mov     rsp,r11
+00007ff6`f883b445 415f            pop     r15
+00007ff6`f883b447 415e            pop     r14
+00007ff6`f883b449 5d              pop     rbp
+00007ff6`f883b44a c3              ret
+</pre>
+
+<p>
+If all we are interested in are the calls a function is making as opposed to the actual disassembly the (/c) flag to the (uf) command can list those.
+The following output has been edited for brevity.
+</p>
+
+<pre>0:000&gt; uf /c @rip 
+notepad!wWinMain (00007ff6`f883b090)
+    notepad!wWinMain+0x41 (00007ff6`f883b0d1):
+    call to notepad!wil::details::FeatureImpl. . . (00007ff6`f883cf44)
+    notepad!wWinMain+0x92 (00007ff6`f883b122):
+    call to notepad!wil_details_FeatureReporting_ReportUsageToService (00007ff6`f883e014)
+
+[REDACTED]
+
+    notepad!wWinMain+0x35e (00007ff6`f883b3ee):
+    call to KERNEL32!FreeLibraryStub (00007ff9`fd85c7d0)
+    notepad!wWinMain+0x36a (00007ff6`f883b3fa):
+    call to combase!CoUninitialize (00007ff9`fd9b28d0) 
+    notepad!wWinMain+0x38b (00007ff6`f883b41b):
+    call to notepad!_imp_load_EventUnregister (00007ff6`f88538db)
+</pre>
+</div>
+</section>
+
+<section>
+<div class="subsection">
+<h3>Continuing Execution</h3>
+
+<p>
+Now that we are done with the walkthrough let WinBDG continue executing the process notepad.exe using the Go (g) command, once again.
+</p>
+
+<pre>0:000&gt; g
+</pre>
+</div>
+</section>
+
+<section>
+<div class="subsection">
+<h3>List of commands</h3>
+<p>
+To recap here are the list commands we have learned about in this tutorial.
+</p>
+
+<table class="table table-striped">
+<tbody><tr><td>vercommand</td><td>Show Debugger Command Line</td></tr>
+<tr><td>vertarget</td><td>Show Target Computer Version</td></tr>
+<tr><td>!cpuid</td><td>Displays information about the processors on the system</td></tr>
+<tr><td>.sympath</td><td>Set Symbol Path</td></tr>
+<tr><td>!lmi</td><td>Displays detailed information about a module</td></tr>
+<tr><td>|</td><td>Process Status</td></tr>
+<tr><td>~</td><td>Thread Status</td></tr>
+<tr><td>lm</td><td>List Loaded Modules</td></tr>
+<tr><td>?</td><td>Evaluate Expression</td></tr>
+<tr><td>x</td><td>Examine Symbols</td></tr>
+<tr><td>bp</td><td>Set Breakpoint</td></tr>
+<tr><td>bl</td><td>Breakpoint Enable</td></tr>
+<tr><td>g</td><td>Go</td></tr>
+<tr><td>r</td><td>Registers</td></tr>
+<tr><td>dp</td><td>Display Memory - Pointer-sized values</td></tr>
+<tr><td>dps</td><td>Display Referenced Memory - Display known symbols</td></tr>
+<tr><td>k</td><td>Display Stack Backtrace</td></tr>
+<tr><td>ln</td><td>List Nearest Symbols</td></tr>
+<tr><td>da</td><td>Display Memory - ASCII characters</td></tr>
+<tr><td>dc</td><td>Display Memory - Double-word values and ASCII characters</td></tr>
+<tr><td>dt</td><td>Display Type</td></tr>
+<tr><td>dS</td><td>Display String - UNICODE_STRING structure</td></tr>
+<tr><td>du</td><td>Display Memory - Wide char characters</td></tr>
+<tr><td>db</td><td>Display Memory - ASCII characters</td></tr>
+<tr><td>dw</td><td>Display Memory - Word values</td></tr>
+<tr><td>dd</td><td>Display Memory - Double-word values</td></tr>
+<tr><td>dq</td><td>Display Memory - Quad-word values</td></tr>
+<tr><td>u</td><td>Unassemble</td></tr>
+<tr><td>ub</td><td>Unassemble backward</td></tr>
+<tr><td>uf</td><td>Unassemble Function</td></tr>
+</tbody></table>
+</div>
+</section>
+
+<section>
+<div class="subsection">
+<h3>Finishing up</h3>
+<p>
+This brings us to the conclusion of this tutorial of executing the most common commands in WinDBG on a user-mode process.
+We have learned how to set up symbols, launch a process from WinDBG, obtain basic information about the target process, threads and modules, set breakpoints, display stacks, display memory contents, display stack traces and navigate through function assembler listings.
+Most of these commands we have learned here would also work when WinDBG is used as a kernel debugger.
+</p>
+</div>
+</section>
+
+<!---END--->
+
+</div>
+</article>
+
+</div>
+</main>
+
+<!-- ANNOUNCE /-->
+<div id="cm-announce"><!-- Copyright (c) CodeMachine Inc. All rights reserved. -->
+<section id="announce">
+<div class="container-fluid announce">
+    <h5>Check out our <a class="linksub" href="https://codemachine.com/index.html#portfolio">training courses</a> on Windows internals, drivers, malware, rootkits and other security topics.</h5>
+</div>
+</section>
+</div>
+
+<!-- FOOTER /-->
+<div id="cm-footer"><!-- Copyright (c) CodeMachine Inc. All rights reserved. -->
+<footer>
+<div class="container-fluid bg-dark text-white p-5">
+    <div class="row">
+        <div class="col">
+            <h4>Courses</h4>
+            <p><a href="https://codemachine.com/trainings/winint.html" class="linksub" target="_top">Internal Architecture</a></p>
+            <p><a href="https://codemachine.com/trainings/winmal.html" class="linksub" target="_top">Malware Techniques</a></p>
+            <p><a href="https://codemachine.com/trainings/kerint.html" class="linksub" target="_top">Kernel Internals</a></p>
+            <p><a href="https://codemachine.com/trainings/kerrkt.html" class="linksub" target="_top">Kernel Rootkits</a></p>
+        </div>
+        <div class="col">
+            <h4>Links</h4>
+            <p><a href="https://codemachine.com/index.html" class="linksub" target="_top">Home</a></p>
+            <p><a href="https://codemachine.com/training.html" class="linksub" target="_top">Training</a></p>
+            <p><a href="https://codemachine.com/bootcamp.html" class="linksub" target="_top">Bootcamp</a></p>
+            <p><a href="https://www.twitter.com/codemachineinc" class="linksub" target="_top">Twitter</a></p>
+        </div>
+        <div class="col-6">
+            <h4>Company</h4>
+            <div class="media">
+                <div class="media-body">
+                 <p><b>CodeMachine</b> is a privately held information security research firm bringing the latest in Windows security through industry leading training courses.</p>
+                 <p><a href="https://codemachine.com/privacy.html" class="linksub" target="_top">Privacy Policy</a></p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col text-wrap">
+        <p class="text-muted">Copyright © 2000-2024 CodeMachine Inc., USA. All rights reserved, worldwide.</p> 
+        </div>
+    </div>
+</div>
+</footer>
+</div>
+
+
+<use-chat-gpt-ai id="USE_CHAT_GPT_AI_ROOT" class="close" data-version="6.3.0" style="transition: 0.1s ease-in-out;"><template shadowrootmode="open"><style><style data-emotion="use-chat-gpt-ai-emotion-cache" data-s=""></style></style><div id="USE_CHAT_GPT_AI_ROOT_Wrapper" style="display: flex; flex-direction: column; flex: 1 1 0%; height: 100vh;"><div style="position: relative; user-select: auto; width: 520px; height: 100%; max-width: 1378px; min-width: 520px; box-sizing: border-box; flex-shrink: 0;"><div><div class="" style="position: absolute; user-select: none; width: 10px; height: 100%; top: 0px; left: -5px; cursor: col-resize;"></div></div><div class="use-chat-gpt-ai-app use-chat-gpt-ai--MuiBox-root use-chat-gpt-ai-emotion-cache-4c6gsi"><div class="use-chat-gpt-ai--MuiStack-root use-chat-gpt-ai-emotion-cache-dgyzad"></div></div><div></div></div></div><link rel="stylesheet" href="chrome-extension://ngphehpfehdmjellohmlojkplilekadg/content_style.css"></template></use-chat-gpt-ai><use-chat-gpt-ai-content-menu id="USE_CHAT_GPT_AI_ROOT_Context_Menu"><template shadowrootmode="open"><div id="USE_CHAT_GPT_AI_ROOT_Context_Menu_Portal"><div class="use-chat-gpt-ai--MuiStack-root maxai--chat-hub use-chat-gpt-ai-context-menu-w53zu8"><div class="use-chat-gpt-ai--MuiStack-root use-chat-gpt-ai-context-menu-cn1ce0"></div><div class="use-chat-gpt-ai--MuiStack-root use-chat-gpt-ai-context-menu-14a9l4s"><div class="use-chat-gpt-ai--MuiStack-root MAX_AI_FLOATING_IMAGE_MINI_MENU use-chat-gpt-ai-context-menu-1cusj27"><div class="use-chat-gpt-ai--MuiStack-root use-chat-gpt-ai-context-menu-1g70kh8"><div class="max_ai_floating_image_dot_button use-chat-gpt-ai--MuiBox-root use-chat-gpt-ai-context-menu-g85zgq"></div></div><div class="use-chat-gpt-ai--MuiStack-root max_ai_floating_image_text_button use-chat-gpt-ai-context-menu-1au7m1f"><button class="use-chat-gpt-ai--MuiButtonBase-root use-chat-gpt-ai--MuiButton-root use-chat-gpt-ai--MuiButton-text use-chat-gpt-ai--MuiButton-textPrimary use-chat-gpt-ai--MuiButton-sizeMedium use-chat-gpt-ai--MuiButton-textSizeMedium use-chat-gpt-ai--MuiButton-colorPrimary use-chat-gpt-ai--MuiButton-disableElevation use-chat-gpt-ai--MuiButton-root use-chat-gpt-ai--MuiButton-text use-chat-gpt-ai--MuiButton-textPrimary use-chat-gpt-ai--MuiButton-sizeMedium use-chat-gpt-ai--MuiButton-textSizeMedium use-chat-gpt-ai--MuiButton-colorPrimary use-chat-gpt-ai--MuiButton-disableElevation use-chat-gpt-ai-context-menu-1xbhkt2" tabindex="0" type="button"><span class="use-chat-gpt-ai--MuiButton-icon use-chat-gpt-ai--MuiButton-startIcon use-chat-gpt-ai--MuiButton-iconSizeMedium use-chat-gpt-ai-context-menu-1l6c7y9"><svg class="use-chat-gpt-ai--MuiSvgIcon-root use-chat-gpt-ai--MuiSvgIcon-fontSizeMedium use-chat-gpt-ai-context-menu-1mjo3cm" focusable="false" aria-hidden="true" viewBox="0 0 33 32" width="33" height="32" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M26.3112 11.493L24.5228 7.55842L20.5882 5.76996L24.5228 3.98149L26.3112 0.046875L28.0997 3.98149L32.0343 5.76996L28.0997 7.55842L26.3112 11.493ZM26.3112 31.5238L24.5228 27.5892L20.5882 25.8007L24.5228 24.0123L26.3112 20.0777L28.0997 24.0123L32.0343 25.8007L28.0997 27.5892L26.3112 31.5238ZM12.0035 27.2315L8.42661 19.3623L0.557373 15.7854L8.42661 12.2084L12.0035 4.33919L15.5805 12.2084L23.4497 15.7854L15.5805 19.3623L12.0035 27.2315Z" fill="currentColor"></path></svg></span><div class="use-chat-gpt-ai--MuiBox-root use-chat-gpt-ai-context-menu-3qrz66"><div class="use-chat-gpt-ai--MuiBox-root use-chat-gpt-ai-context-menu-qkfugk">Chat with this image</div></div><span class="use-chat-gpt-ai--MuiTouchRipple-root use-chat-gpt-ai-context-menu-w0pj6f"></span></button><hr class="use-chat-gpt-ai--MuiDivider-root use-chat-gpt-ai--MuiDivider-fullWidth use-chat-gpt-ai--MuiDivider-vertical use-chat-gpt-ai-context-menu-krge2n"><div class="use-chat-gpt-ai--MuiStack-root use-chat-gpt-ai-context-menu-colnl9"><span class=""><button class="use-chat-gpt-ai--MuiButtonBase-root use-chat-gpt-ai--MuiButton-root use-chat-gpt-ai--MuiButton-text use-chat-gpt-ai--MuiButton-textPrimary use-chat-gpt-ai--MuiButton-sizeMedium use-chat-gpt-ai--MuiButton-textSizeMedium use-chat-gpt-ai--MuiButton-colorPrimary use-chat-gpt-ai--MuiButton-disableElevation use-chat-gpt-ai--MuiButton-root use-chat-gpt-ai--MuiButton-text use-chat-gpt-ai--MuiButton-textPrimary use-chat-gpt-ai--MuiButton-sizeMedium use-chat-gpt-ai--MuiButton-textSizeMedium use-chat-gpt-ai--MuiButton-colorPrimary use-chat-gpt-ai--MuiButton-disableElevation maxai_close_button use-chat-gpt-ai-context-menu-1sx8e0" tabindex="0" type="button"><svg class="use-chat-gpt-ai--MuiSvgIcon-root use-chat-gpt-ai--MuiSvgIcon-fontSizeMedium use-chat-gpt-ai-context-menu-69fzer" focusable="false" aria-hidden="true" viewBox="0 0 24 24" data-testid="CloseOutlinedIcon"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"></path></svg><span class="use-chat-gpt-ai--MuiTouchRipple-root use-chat-gpt-ai-context-menu-w0pj6f"></span></button></span><button class="use-chat-gpt-ai--MuiButtonBase-root use-chat-gpt-ai--MuiButton-root use-chat-gpt-ai--MuiButton-text use-chat-gpt-ai--MuiButton-textPrimary use-chat-gpt-ai--MuiButton-sizeMedium use-chat-gpt-ai--MuiButton-textSizeMedium use-chat-gpt-ai--MuiButton-colorPrimary use-chat-gpt-ai--MuiButton-disableElevation use-chat-gpt-ai--MuiButton-root use-chat-gpt-ai--MuiButton-text use-chat-gpt-ai--MuiButton-textPrimary use-chat-gpt-ai--MuiButton-sizeMedium use-chat-gpt-ai--MuiButton-textSizeMedium use-chat-gpt-ai--MuiButton-colorPrimary use-chat-gpt-ai--MuiButton-disableElevation maxai_more_close_options use-chat-gpt-ai-context-menu-61av2n" tabindex="0" type="button"><svg class="use-chat-gpt-ai--MuiSvgIcon-root use-chat-gpt-ai--MuiSvgIcon-fontSizeMedium use-chat-gpt-ai-context-menu-1t7gdln" focusable="false" aria-hidden="true" viewBox="0 0 18 18" width="18" height="18" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M9.00009 1.5V9M13.7701 4.98C14.7139 5.92409 15.3565 7.12683 15.6168 8.43614C15.8771 9.74545 15.7433 11.1025 15.2323 12.3358C14.7214 13.5691 13.8562 14.6232 12.7462 15.3648C11.6362 16.1064 10.3313 16.5022 8.99634 16.5022C7.66141 16.5022 6.35645 16.1064 5.24647 15.3648C4.13649 14.6232 3.27132 13.5691 2.76036 12.3358C2.24941 11.1025 2.11561 9.74545 2.37588 8.43614C2.63615 7.12683 3.27881 5.92409 4.22259 4.98" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path></svg><div class="maxai__floating_image_menu__close_menu use-chat-gpt-ai--MuiBox-root use-chat-gpt-ai-context-menu-1oflqog"><div class="use-chat-gpt-ai--MuiList-root use-chat-gpt-ai--MuiList-padding use-chat-gpt-ai-context-menu-1t4ig92"><div class="use-chat-gpt-ai--MuiBox-root use-chat-gpt-ai-context-menu-2rlxtj"><div class="use-chat-gpt-ai--MuiBox-root use-chat-gpt-ai-context-menu-j4jqcw" data-button-clicked-name="max_ai__floating_image_menu__hide_menu__this_site" role="menuitem"><div class="use-chat-gpt-ai--MuiBox-root use-chat-gpt-ai-context-menu-0"><span class=""><div class="use-chat-gpt-ai--MuiButtonBase-root use-chat-gpt-ai--MuiListItemButton-root use-chat-gpt-ai--MuiListItemButton-gutters use-chat-gpt-ai--MuiListItemButton-root use-chat-gpt-ai--MuiListItemButton-gutters use-chat-gpt-ai-context-menu-1pkh8h9" tabindex="0" role="button"><div class="use-chat-gpt-ai--MuiListItemText-root use-chat-gpt-ai-context-menu-8ccl31"><span class="use-chat-gpt-ai--MuiTypography-root use-chat-gpt-ai--MuiTypography-body1 use-chat-gpt-ai--MuiListItemText-primary use-chat-gpt-ai-context-menu-yb0lig">Hide on this site</span></div><span class="use-chat-gpt-ai--MuiTouchRipple-root use-chat-gpt-ai-context-menu-w0pj6f"></span></div></span></div></div><div class="use-chat-gpt-ai--MuiBox-root use-chat-gpt-ai-context-menu-j4jqcw" data-button-clicked-name="max_ai__floating_image_menu__hide_menu__all_sites" role="menuitem"><div class="use-chat-gpt-ai--MuiBox-root use-chat-gpt-ai-context-menu-0"><span class=""><div class="use-chat-gpt-ai--MuiButtonBase-root use-chat-gpt-ai--MuiListItemButton-root use-chat-gpt-ai--MuiListItemButton-gutters use-chat-gpt-ai--MuiListItemButton-root use-chat-gpt-ai--MuiListItemButton-gutters use-chat-gpt-ai-context-menu-1pkh8h9" tabindex="0" role="button"><div class="use-chat-gpt-ai--MuiListItemText-root use-chat-gpt-ai-context-menu-8ccl31"><span class="use-chat-gpt-ai--MuiTypography-root use-chat-gpt-ai--MuiTypography-body1 use-chat-gpt-ai--MuiListItemText-primary use-chat-gpt-ai-context-menu-yb0lig">Hide always</span></div><span class="use-chat-gpt-ai--MuiTouchRipple-root use-chat-gpt-ai-context-menu-w0pj6f"></span></div></span></div></div></div><hr class="use-chat-gpt-ai--MuiDivider-root use-chat-gpt-ai--MuiDivider-fullWidth use-chat-gpt-ai-context-menu-39bbo6"><li class="use-chat-gpt-ai--MuiListItem-root use-chat-gpt-ai--MuiListItem-gutters use-chat-gpt-ai--MuiListItem-padding use-chat-gpt-ai-context-menu-1chkqss"><div class="use-chat-gpt-ai--MuiButtonBase-root use-chat-gpt-ai--MuiListItemButton-root use-chat-gpt-ai--MuiListItemButton-gutters use-chat-gpt-ai--MuiListItemButton-root use-chat-gpt-ai--MuiListItemButton-gutters use-chat-gpt-ai-context-menu-1pkh8h9" tabindex="0" role="button"><div class="use-chat-gpt-ai--MuiListItemText-root use-chat-gpt-ai-context-menu-1tsvksn"><p class="use-chat-gpt-ai--MuiTypography-root use-chat-gpt-ai--MuiTypography-body1 use-chat-gpt-ai--MuiTypography-noWrap use-chat-gpt-ai-context-menu-14szb0y">You can re-enable it in <span class="use-chat-gpt-ai--MuiTypography-root use-chat-gpt-ai--MuiTypography-body1 use-chat-gpt-ai-context-menu-sf9bq">Settings</span></p></div><span class="use-chat-gpt-ai--MuiTouchRipple-root use-chat-gpt-ai-context-menu-w0pj6f"></span></div></li></div></div></button></div></div></div><div class="use-chat-gpt-ai--MuiStack-root MAX_AI_FLOATING_IMAGE_MINI_MENU use-chat-gpt-ai-context-menu-1cusj27" data-testid="maxai__floating_image_mini_menu__first_enter_image"><div class="use-chat-gpt-ai--MuiStack-root use-chat-gpt-ai-context-menu-1g70kh8"><div class="max_ai_floating_image_dot_button use-chat-gpt-ai--MuiBox-root use-chat-gpt-ai-context-menu-g85zgq"></div></div><div class="use-chat-gpt-ai--MuiStack-root max_ai_floating_image_text_button use-chat-gpt-ai-context-menu-1au7m1f"><button class="use-chat-gpt-ai--MuiButtonBase-root use-chat-gpt-ai--MuiButton-root use-chat-gpt-ai--MuiButton-text use-chat-gpt-ai--MuiButton-textPrimary use-chat-gpt-ai--MuiButton-sizeMedium use-chat-gpt-ai--MuiButton-textSizeMedium use-chat-gpt-ai--MuiButton-colorPrimary use-chat-gpt-ai--MuiButton-disableElevation use-chat-gpt-ai--MuiButton-root use-chat-gpt-ai--MuiButton-text use-chat-gpt-ai--MuiButton-textPrimary use-chat-gpt-ai--MuiButton-sizeMedium use-chat-gpt-ai--MuiButton-textSizeMedium use-chat-gpt-ai--MuiButton-colorPrimary use-chat-gpt-ai--MuiButton-disableElevation use-chat-gpt-ai-context-menu-1xbhkt2" tabindex="0" type="button"><span class="use-chat-gpt-ai--MuiButton-icon use-chat-gpt-ai--MuiButton-startIcon use-chat-gpt-ai--MuiButton-iconSizeMedium use-chat-gpt-ai-context-menu-1l6c7y9"><svg class="use-chat-gpt-ai--MuiSvgIcon-root use-chat-gpt-ai--MuiSvgIcon-fontSizeMedium use-chat-gpt-ai-context-menu-1mjo3cm" focusable="false" aria-hidden="true" viewBox="0 0 33 32" width="33" height="32" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M26.3112 11.493L24.5228 7.55842L20.5882 5.76996L24.5228 3.98149L26.3112 0.046875L28.0997 3.98149L32.0343 5.76996L28.0997 7.55842L26.3112 11.493ZM26.3112 31.5238L24.5228 27.5892L20.5882 25.8007L24.5228 24.0123L26.3112 20.0777L28.0997 24.0123L32.0343 25.8007L28.0997 27.5892L26.3112 31.5238ZM12.0035 27.2315L8.42661 19.3623L0.557373 15.7854L8.42661 12.2084L12.0035 4.33919L15.5805 12.2084L23.4497 15.7854L15.5805 19.3623L12.0035 27.2315Z" fill="currentColor"></path></svg></span><div class="use-chat-gpt-ai--MuiBox-root use-chat-gpt-ai-context-menu-3qrz66"><div class="use-chat-gpt-ai--MuiBox-root use-chat-gpt-ai-context-menu-qkfugk">Chat with this image</div></div><span class="use-chat-gpt-ai--MuiTouchRipple-root use-chat-gpt-ai-context-menu-w0pj6f"></span></button><hr class="use-chat-gpt-ai--MuiDivider-root use-chat-gpt-ai--MuiDivider-fullWidth use-chat-gpt-ai--MuiDivider-vertical use-chat-gpt-ai-context-menu-krge2n"><div class="use-chat-gpt-ai--MuiStack-root use-chat-gpt-ai-context-menu-colnl9"><span class=""><button class="use-chat-gpt-ai--MuiButtonBase-root use-chat-gpt-ai--MuiButton-root use-chat-gpt-ai--MuiButton-text use-chat-gpt-ai--MuiButton-textPrimary use-chat-gpt-ai--MuiButton-sizeMedium use-chat-gpt-ai--MuiButton-textSizeMedium use-chat-gpt-ai--MuiButton-colorPrimary use-chat-gpt-ai--MuiButton-disableElevation use-chat-gpt-ai--MuiButton-root use-chat-gpt-ai--MuiButton-text use-chat-gpt-ai--MuiButton-textPrimary use-chat-gpt-ai--MuiButton-sizeMedium use-chat-gpt-ai--MuiButton-textSizeMedium use-chat-gpt-ai--MuiButton-colorPrimary use-chat-gpt-ai--MuiButton-disableElevation maxai_close_button use-chat-gpt-ai-context-menu-1sx8e0" tabindex="0" type="button"><svg class="use-chat-gpt-ai--MuiSvgIcon-root use-chat-gpt-ai--MuiSvgIcon-fontSizeMedium use-chat-gpt-ai-context-menu-69fzer" focusable="false" aria-hidden="true" viewBox="0 0 24 24" data-testid="CloseOutlinedIcon"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"></path></svg><span class="use-chat-gpt-ai--MuiTouchRipple-root use-chat-gpt-ai-context-menu-w0pj6f"></span></button></span><button class="use-chat-gpt-ai--MuiButtonBase-root use-chat-gpt-ai--MuiButton-root use-chat-gpt-ai--MuiButton-text use-chat-gpt-ai--MuiButton-textPrimary use-chat-gpt-ai--MuiButton-sizeMedium use-chat-gpt-ai--MuiButton-textSizeMedium use-chat-gpt-ai--MuiButton-colorPrimary use-chat-gpt-ai--MuiButton-disableElevation use-chat-gpt-ai--MuiButton-root use-chat-gpt-ai--MuiButton-text use-chat-gpt-ai--MuiButton-textPrimary use-chat-gpt-ai--MuiButton-sizeMedium use-chat-gpt-ai--MuiButton-textSizeMedium use-chat-gpt-ai--MuiButton-colorPrimary use-chat-gpt-ai--MuiButton-disableElevation maxai_more_close_options use-chat-gpt-ai-context-menu-61av2n" tabindex="0" type="button"><svg class="use-chat-gpt-ai--MuiSvgIcon-root use-chat-gpt-ai--MuiSvgIcon-fontSizeMedium use-chat-gpt-ai-context-menu-1t7gdln" focusable="false" aria-hidden="true" viewBox="0 0 18 18" width="18" height="18" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M9.00009 1.5V9M13.7701 4.98C14.7139 5.92409 15.3565 7.12683 15.6168 8.43614C15.8771 9.74545 15.7433 11.1025 15.2323 12.3358C14.7214 13.5691 13.8562 14.6232 12.7462 15.3648C11.6362 16.1064 10.3313 16.5022 8.99634 16.5022C7.66141 16.5022 6.35645 16.1064 5.24647 15.3648C4.13649 14.6232 3.27132 13.5691 2.76036 12.3358C2.24941 11.1025 2.11561 9.74545 2.37588 8.43614C2.63615 7.12683 3.27881 5.92409 4.22259 4.98" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path></svg><div class="maxai__floating_image_menu__close_menu use-chat-gpt-ai--MuiBox-root use-chat-gpt-ai-context-menu-1oflqog"><div class="use-chat-gpt-ai--MuiList-root use-chat-gpt-ai--MuiList-padding use-chat-gpt-ai-context-menu-1t4ig92"><div class="use-chat-gpt-ai--MuiBox-root use-chat-gpt-ai-context-menu-2rlxtj"><div class="use-chat-gpt-ai--MuiBox-root use-chat-gpt-ai-context-menu-j4jqcw" data-button-clicked-name="max_ai__floating_image_menu__hide_menu__this_site" role="menuitem"><div class="use-chat-gpt-ai--MuiBox-root use-chat-gpt-ai-context-menu-0"><span class=""><div class="use-chat-gpt-ai--MuiButtonBase-root use-chat-gpt-ai--MuiListItemButton-root use-chat-gpt-ai--MuiListItemButton-gutters use-chat-gpt-ai--MuiListItemButton-root use-chat-gpt-ai--MuiListItemButton-gutters use-chat-gpt-ai-context-menu-1pkh8h9" tabindex="0" role="button"><div class="use-chat-gpt-ai--MuiListItemText-root use-chat-gpt-ai-context-menu-8ccl31"><span class="use-chat-gpt-ai--MuiTypography-root use-chat-gpt-ai--MuiTypography-body1 use-chat-gpt-ai--MuiListItemText-primary use-chat-gpt-ai-context-menu-yb0lig">Hide on this site</span></div><span class="use-chat-gpt-ai--MuiTouchRipple-root use-chat-gpt-ai-context-menu-w0pj6f"></span></div></span></div></div><div class="use-chat-gpt-ai--MuiBox-root use-chat-gpt-ai-context-menu-j4jqcw" data-button-clicked-name="max_ai__floating_image_menu__hide_menu__all_sites" role="menuitem"><div class="use-chat-gpt-ai--MuiBox-root use-chat-gpt-ai-context-menu-0"><span class=""><div class="use-chat-gpt-ai--MuiButtonBase-root use-chat-gpt-ai--MuiListItemButton-root use-chat-gpt-ai--MuiListItemButton-gutters use-chat-gpt-ai--MuiListItemButton-root use-chat-gpt-ai--MuiListItemButton-gutters use-chat-gpt-ai-context-menu-1pkh8h9" tabindex="0" role="button"><div class="use-chat-gpt-ai--MuiListItemText-root use-chat-gpt-ai-context-menu-8ccl31"><span class="use-chat-gpt-ai--MuiTypography-root use-chat-gpt-ai--MuiTypography-body1 use-chat-gpt-ai--MuiListItemText-primary use-chat-gpt-ai-context-menu-yb0lig">Hide always</span></div><span class="use-chat-gpt-ai--MuiTouchRipple-root use-chat-gpt-ai-context-menu-w0pj6f"></span></div></span></div></div></div><hr class="use-chat-gpt-ai--MuiDivider-root use-chat-gpt-ai--MuiDivider-fullWidth use-chat-gpt-ai-context-menu-39bbo6"><li class="use-chat-gpt-ai--MuiListItem-root use-chat-gpt-ai--MuiListItem-gutters use-chat-gpt-ai--MuiListItem-padding use-chat-gpt-ai-context-menu-1chkqss"><div class="use-chat-gpt-ai--MuiButtonBase-root use-chat-gpt-ai--MuiListItemButton-root use-chat-gpt-ai--MuiListItemButton-gutters use-chat-gpt-ai--MuiListItemButton-root use-chat-gpt-ai--MuiListItemButton-gutters use-chat-gpt-ai-context-menu-1pkh8h9" tabindex="0" role="button"><div class="use-chat-gpt-ai--MuiListItemText-root use-chat-gpt-ai-context-menu-1tsvksn"><p class="use-chat-gpt-ai--MuiTypography-root use-chat-gpt-ai--MuiTypography-body1 use-chat-gpt-ai--MuiTypography-noWrap use-chat-gpt-ai-context-menu-14szb0y">You can re-enable it in <span class="use-chat-gpt-ai--MuiTypography-root use-chat-gpt-ai--MuiTypography-body1 use-chat-gpt-ai-context-menu-sf9bq">Settings</span></p></div><span class="use-chat-gpt-ai--MuiTouchRipple-root use-chat-gpt-ai-context-menu-w0pj6f"></span></div></li></div></div></button></div></div></div><div class="max-ai__click-context-menu close use-chat-gpt-ai--MuiBox-root use-chat-gpt-ai-context-menu-kew9y6"><div class="use-chat-gpt-ai--MuiBox-root use-chat-gpt-ai-context-menu-cskh5k"><div class="use-chat-gpt-ai--MuiStack-root mini-icon-button use-chat-gpt-ai-context-menu-13svzlb" id="max_ai__floating_context_menu__mini_hide_button"><div class="use-chat-gpt-ai--MuiBox-root use-chat-gpt-ai-context-menu-sx8eqy"></div></div></div></div></div></div><div id=":r3:" data-floating-ui-portal=""><div id="USE_CHAT_GPT_AI_ROOT_Floating_Reference_Element" data-testid="maxai--floating-context-menu-reference-element" aria-hidden="true" tabindex="-1" data-floating-ui-focusable="" style="position: fixed; z-index: -1; opacity: 0; top: 8px; left: 8px; width: 736px; height: auto; max-height: 620px;"><div class="RootMenu use-chat-gpt-ai--MuiBox-root use-chat-gpt-ai-context-menu-170bhbu" aria-expanded="false" aria-haspopup="menu" id=":rd:" style="height: auto; max-height: 620px;"><div class="use-chat-gpt-ai--MuiBox-root use-chat-gpt-ai-context-menu-vsc00s"></div><div class="use-chat-gpt-ai--MuiCollapse-root use-chat-gpt-ai--MuiCollapse-vertical use-chat-gpt-ai--MuiCollapse-hidden use-chat-gpt-ai-context-menu-a0y2e3" style="min-height: 0px; height: 0px; transition-duration: 300ms;"><div class="use-chat-gpt-ai--MuiCollapse-wrapper use-chat-gpt-ai--MuiCollapse-vertical use-chat-gpt-ai-context-menu-hboir5"><div class="use-chat-gpt-ai--MuiCollapse-wrapperInner use-chat-gpt-ai--MuiCollapse-vertical use-chat-gpt-ai-context-menu-8atqhb"><div class="use-chat-gpt-ai--MuiBox-root use-chat-gpt-ai-context-menu-110zff5"><svg class="use-chat-gpt-ai--MuiSvgIcon-root use-chat-gpt-ai--MuiSvgIcon-fontSizeMedium use-chat-gpt-ai-context-menu-57kesc" focusable="false" aria-hidden="true" viewBox="0 0 24 24" data-testid="SubdirectoryArrowRightIcon"><path d="m19 15-6 6-1.42-1.42L15.17 16H4V4h2v10h9.17l-3.59-3.58L13 9z"></path></svg><p class="use-chat-gpt-ai--MuiTypography-root use-chat-gpt-ai--MuiTypography-body1 use-chat-gpt-ai-context-menu-1to850w"></p></div></div></div></div><div class="use-chat-gpt-ai--MuiStack-root use-chat-gpt-ai-context-menu-1kfbfs8"><div class="use-chat-gpt-ai--MuiStack-root use-chat-gpt-ai-context-menu-qjk9hw"><div class="use-chat-gpt-ai--MuiStack-root use-chat-gpt-ai-context-menu-151ci0z"><div class="use-chat-gpt-ai--MuiBox-root use-chat-gpt-ai-context-menu-58lcl2" style="height: 24px;"><div class="chat-box__input-skeleton use-chat-gpt-ai--MuiBox-root use-chat-gpt-ai-context-menu-0"><span class="use-chat-gpt-ai--MuiSkeleton-root use-chat-gpt-ai--MuiSkeleton-text use-chat-gpt-ai--MuiSkeleton-pulse use-chat-gpt-ai-context-menu-1i0vnjy" style="height: 24px;"></span></div><div class="chat-box__input—prefix use-chat-gpt-ai--MuiBox-root use-chat-gpt-ai-context-menu-8atqhb"></div><div class="use-chat-gpt-ai--MuiStack-root use-chat-gpt-ai-context-menu-1ihcuwi"><div class="use-chat-gpt-ai--MuiStack-root max-ai-user-input__expand use-chat-gpt-ai-context-menu-yjmiuu"></div><textarea id="USE_CHAT_GPT_AI_ROOT_Floating_Input" placeholder="" rows="1" data-min-line="1" style="height: 24px;"></textarea></div><div class="use-chat-gpt-ai--MuiStack-root use-chat-gpt-ai-context-menu-1vswomk"></div></div></div><button class="use-chat-gpt-ai--MuiButtonBase-root use-chat-gpt-ai--MuiButton-root use-chat-gpt-ai--MuiButton-contained use-chat-gpt-ai--MuiButton-containedPrimary use-chat-gpt-ai--MuiButton-sizeMedium use-chat-gpt-ai--MuiButton-containedSizeMedium use-chat-gpt-ai--MuiButton-colorPrimary use-chat-gpt-ai--MuiButton-disableElevation Mui-disabled use-chat-gpt-ai--MuiButton-root use-chat-gpt-ai--MuiButton-contained use-chat-gpt-ai--MuiButton-containedPrimary use-chat-gpt-ai--MuiButton-sizeMedium use-chat-gpt-ai--MuiButton-containedSizeMedium use-chat-gpt-ai--MuiButton-colorPrimary use-chat-gpt-ai--MuiButton-disableElevation use-chat-gpt-ai-context-menu-goyz2k" tabindex="-1" type="button" disabled="" data-testid="sidebar_actions__send_btn"><svg class="use-chat-gpt-ai--MuiSvgIcon-root use-chat-gpt-ai--MuiSvgIcon-fontSizeMedium use-chat-gpt-ai-context-menu-ycrkis" focusable="false" aria-hidden="true" viewBox="0 0 24 24" data-testid="SendIcon"><path d="M2.01 21 23 12 2.01 3 2 10l15 2-15 2z"></path></svg></button></div></div></div></div></div><div id=":re:" data-floating-ui-portal=""></div></div><style><style data-emotion="use-chat-gpt-ai-context-menu" data-s=""></style></style><link rel="stylesheet" href="chrome-extension://ngphehpfehdmjellohmlojkplilekadg/content_style.css"></template></use-chat-gpt-ai-content-menu><use-chat-gpt-ai id="maxai-global-popup-container"><template shadowrootmode="open"><div></div><style></style><link rel="stylesheet" href="chrome-extension://ngphehpfehdmjellohmlojkplilekadg/content_style.css"></template></use-chat-gpt-ai><max-ai-minimum-app id="USE_CHAT_GPT_AI_ROOT_Minimize_Container" data-version="6.3.0"><template shadowrootmode="open"><style><style data-emotion="use-chat-gpt-ai-emotion-cache" data-s=""></style></style><div><div class="use-chat-gpt-ai--MuiBox-root use-chat-gpt-ai-emotion-cache-12mfn0n"><div class="react-draggable use-chat-gpt-ai--MuiBox-root use-chat-gpt-ai-emotion-cache-t1tl5f" data-testid="quick-access-maxai-mini-button-main" style="transform: translate(0px, 586px);"><div class="use-chat-gpt-ai--MuiStack-root use-chat-gpt-ai-emotion-cache-6yw1ux"><div class="use-chat-gpt-ai--MuiStack-root use-chat-gpt-ai-emotion-cache-10xqjqu"><div class="use-chat-gpt-ai--MuiBox-root use-chat-gpt-ai-emotion-cache-eh29y" type="quick-access"><div class="" style="position: absolute; top: 0px; right: 0px; width: var(--expanded-width); height: 100%; pointer-events: none; margin-right: calc(-1 * var(--middle-button-width) - 2px);"></div><div class="use-chat-gpt-ai--MuiStack-root use-chat-gpt-ai-emotion-cache-1v551eb"><button class="use-chat-gpt-ai--MuiButtonBase-root use-chat-gpt-ai--MuiButton-root use-chat-gpt-ai--MuiButton-text use-chat-gpt-ai--MuiButton-textPrimary use-chat-gpt-ai--MuiButton-sizeMedium use-chat-gpt-ai--MuiButton-textSizeMedium use-chat-gpt-ai--MuiButton-colorPrimary use-chat-gpt-ai--MuiButton-disableElevation use-chat-gpt-ai--MuiButton-root use-chat-gpt-ai--MuiButton-text use-chat-gpt-ai--MuiButton-textPrimary use-chat-gpt-ai--MuiButton-sizeMedium use-chat-gpt-ai--MuiButton-textSizeMedium use-chat-gpt-ai--MuiButton-colorPrimary use-chat-gpt-ai--MuiButton-disableElevation use-chat-gpt-ai-emotion-cache-1a9bjum" tabindex="0" type="button" data-testid="maxai__quick_access__open_sidebar_button"><div class="use-chat-gpt-ai--MuiStack-root use-chat-gpt-ai-emotion-cache-bmrrcj" data-testid="quick-access-maxai-mini-button"><div class="use-chat-gpt-ai--MuiStack-root use-chat-gpt-ai-emotion-cache-h3hja2"><svg class="use-chat-gpt-ai--MuiSvgIcon-root use-chat-gpt-ai--MuiSvgIcon-fontSizeMedium use-chat-gpt-ai-emotion-cache-16907yi" focusable="false" aria-hidden="true" viewBox="0 0 33 32" width="33" height="32" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M26.3112 11.493L24.5228 7.55842L20.5882 5.76996L24.5228 3.98149L26.3112 0.046875L28.0997 3.98149L32.0343 5.76996L28.0997 7.55842L26.3112 11.493ZM26.3112 31.5238L24.5228 27.5892L20.5882 25.8007L24.5228 24.0123L26.3112 20.0777L28.0997 24.0123L32.0343 25.8007L28.0997 27.5892L26.3112 31.5238ZM12.0035 27.2315L8.42661 19.3623L0.557373 15.7854L8.42661 12.2084L12.0035 4.33919L15.5805 12.2084L23.4497 15.7854L15.5805 19.3623L12.0035 27.2315Z" fill="currentColor"></path></svg></div></div><span class="use-chat-gpt-ai--MuiTouchRipple-root use-chat-gpt-ai-emotion-cache-w0pj6f"></span></button><button class="use-chat-gpt-ai--MuiButtonBase-root use-chat-gpt-ai--MuiButton-root use-chat-gpt-ai--MuiButton-text use-chat-gpt-ai--MuiButton-textPrimary use-chat-gpt-ai--MuiButton-sizeMedium use-chat-gpt-ai--MuiButton-textSizeMedium use-chat-gpt-ai--MuiButton-colorPrimary use-chat-gpt-ai--MuiButton-disableElevation use-chat-gpt-ai--MuiButton-root use-chat-gpt-ai--MuiButton-text use-chat-gpt-ai--MuiButton-textPrimary use-chat-gpt-ai--MuiButton-sizeMedium use-chat-gpt-ai--MuiButton-textSizeMedium use-chat-gpt-ai--MuiButton-colorPrimary use-chat-gpt-ai--MuiButton-disableElevation use-chat-gpt-ai-emotion-cache-1kszovk" tabindex="0" type="button" data-testid="maxai__quick_access__immersive_chat_button"><div class="use-chat-gpt-ai--MuiStack-root use-chat-gpt-ai-emotion-cache-1wksvt0" data-testid="quick-access-maxai-immersive-chat-button"><svg class="use-chat-gpt-ai--MuiSvgIcon-root use-chat-gpt-ai--MuiSvgIcon-fontSizeMedium use-chat-gpt-ai-emotion-cache-16wtusg" focusable="false" aria-hidden="true" viewBox="0 0 24 24" data-testid="FullscreenOutlinedIcon"><path d="M7 14H5v5h5v-2H7zm-2-4h2V7h3V5H5zm12 7h-3v2h5v-5h-2zM14 5v2h3v3h2V5z"></path></svg></div><span class="use-chat-gpt-ai--MuiTouchRipple-root use-chat-gpt-ai-emotion-cache-w0pj6f"></span></button></div></div><div class="use-chat-gpt-ai--MuiStack-root use-chat-gpt-ai-emotion-cache-14dez2x"><div class="use-chat-gpt-ai--MuiStack-root use-chat-gpt-ai-emotion-cache-1x5zvlr"><div class="use-chat-gpt-ai--MuiBox-root use-chat-gpt-ai-emotion-cache-niqjhb" type="summarize"><div class="" style="position: absolute; top: 0px; right: 0px; width: var(--expanded-width); height: 100%; pointer-events: none; margin-right: 0px;"></div><div class="use-chat-gpt-ai--MuiStack-root use-chat-gpt-ai-emotion-cache-ivouq4"><button class="use-chat-gpt-ai--MuiButtonBase-root use-chat-gpt-ai--MuiButton-root use-chat-gpt-ai--MuiButton-text use-chat-gpt-ai--MuiButton-textPrimary use-chat-gpt-ai--MuiButton-sizeMedium use-chat-gpt-ai--MuiButton-textSizeMedium use-chat-gpt-ai--MuiButton-colorPrimary use-chat-gpt-ai--MuiButton-disableElevation use-chat-gpt-ai--MuiButton-root use-chat-gpt-ai--MuiButton-text use-chat-gpt-ai--MuiButton-textPrimary use-chat-gpt-ai--MuiButton-sizeMedium use-chat-gpt-ai--MuiButton-textSizeMedium use-chat-gpt-ai--MuiButton-colorPrimary use-chat-gpt-ai--MuiButton-disableElevation use-chat-gpt-ai-emotion-cache-1vv0u1f" tabindex="0" type="button" data-testid="maxai__quick_access__summarize_button"><div class="use-chat-gpt-ai--MuiStack-root use-chat-gpt-ai-emotion-cache-1wksvt0" data-testid="quick-access-maxai-summary-button"><svg class="use-chat-gpt-ai--MuiSvgIcon-root use-chat-gpt-ai--MuiSvgIcon-fontSizeMedium use-chat-gpt-ai-emotion-cache-t2sl93" focusable="false" aria-hidden="true" viewBox="0 0 24 24" width="24" height="24" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path d="M2.75293 7.72847C2.75293 9.54323 3.93351 10.7238 5.47509 10.7238C6.76298 10.7238 7.81672 9.83594 7.81672 8.49926C7.81672 7.22112 6.94836 6.37227 5.76778 6.37227C5.18238 6.37227 4.71405 6.58692 4.40183 7.02598C4.7043 5.70881 5.72876 4.84045 7.13375 4.77216C7.51426 4.74288 7.80697 4.45017 7.80697 4.07942C7.80697 3.62085 7.41669 3.35742 6.9191 3.35742C4.71405 3.35742 2.75293 5.22096 2.75293 7.72847Z"></path><path d="M8.85107 7.72847C8.85107 9.54323 10.0316 10.7238 11.5634 10.7238C12.8611 10.7238 13.9148 9.83594 13.9148 8.49926C13.9148 7.22112 13.0465 6.37227 11.8659 6.37227C11.2903 6.37227 10.8122 6.57717 10.5097 7.02598C10.8024 5.70881 11.8269 4.84045 13.2221 4.77216C13.6124 4.74288 13.9051 4.45017 13.9051 4.07942C13.9051 3.62085 13.5246 3.35742 13.0172 3.35742C10.8219 3.35742 8.85107 5.22096 8.85107 7.72847Z"></path><path d="M21.2469 3.64258H16.2427V5.65746H21.2469V3.64258Z"></path><path d="M21.2469 8.6416H16.2427V10.6564H21.2469V8.6416Z"></path><path d="M2.79297 13.6406H21.2469V15.6555H2.79297V13.6406Z"></path><path d="M21.2469 18.6396H2.79297V20.643H21.2469V18.6396Z"></path></svg></div><span class="use-chat-gpt-ai--MuiTouchRipple-root use-chat-gpt-ai-emotion-cache-w0pj6f"></span></button></div></div></div></div><div class="use-chat-gpt-ai--MuiStack-root use-chat-gpt-ai-emotion-cache-p7zu5u"><div class="use-chat-gpt-ai--MuiStack-root use-chat-gpt-ai-emotion-cache-djo5ij"></div></div></div></div></div></div></div></template></max-ai-minimum-app><div id="MAXAI_SNACKBAR_CONTAINER" style="z-index: 2147483647; color: rgb(255, 255, 255); position: absolute;"><span></span></div><div id="modheader-shadow-root-host-el-id" style="display: initial !important;"><template shadowrootmode="open"><link rel="stylesheet" href="chrome-extension://opgbiafapkbbnbnjcdomjaghbckfkglc/assets/AppVite-041b9295.css"><style id="svelte-g289qm">#ModHeader-shadow-root{all:initial;font-size:16px;font-family:Roboto, sans-serif, -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen, Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue !important}@tailwind base;@tailwind components;@tailwind utilities;</style><style id="svelte-ol2ow9">#modheader-tool-suspend-btn.svelte-ol2ow9{position:fixed;top:30vh;right:0;z-index:2147483640;transition:transform 0.3s;cursor:pointer;user-select:none;font-size:16px;visibility:hidden}#modheader-tool-suspend-btn.rest.svelte-ol2ow9:hover{transform:translate(0, 0) !important}.suspend-btn.svelte-ol2ow9{border-radius:50%;width:2.25em;height:2.25em}.memory-button.svelte-ol2ow9{display:flex;width:100%;height:100%;border-radius:50%;align-items:center;justify-content:center;font-size:12px;font-weight:700;background-color:#56a9ff;color:white;box-shadow:0 3px 6px -1px rgba(0, 0, 0, 0.12), 0 10px 36px -4px rgba(77, 96, 232, 0.3);gap:1px;flex-wrap:wrap;line-height:1;zoom:0.94}.tooltip.svelte-ol2ow9{position:absolute;top:0;bottom:0;height:min-content;margin:auto;font-size:12px;background-color:rgb(1, 1, 1, 0.9);font-weight:100;white-space:nowrap;color:#dddddd;padding:5px 9px;border-radius:5px;box-shadow:0 6px 16px 0 rgba(0, 0, 0, 0.08), 0 3px 6px -4px rgba(0, 0, 0, 0.12), 0 9px 28px 8px rgba(0, 0, 0, 0.05);opacity:0;visibility:hidden;transition:visibility 0s linear 0.1s, opacity 0.1s linear}.close-btn-container.svelte-ol2ow9{position:absolute;visibility:hidden;top:-6px;left:-6px;border-radius:50%;background-color:rgba(0, 0, 0, 0.51);line-height:0.8;transition:background-color 0.3s}.close-btn-container.svelte-ol2ow9:hover{background-color:rgba(0, 0, 0, 0.7)}.close-btn{width:14px !important;height:14px !important;overflow-y:hidden}#close-menu-c.svelte-ol2ow9{position:absolute;top:0;z-index:999999}</style><style id="svelte-13zog9y">.icon-btn.svelte-13zog9y{border-radius:50%;transition:background-color 0.2s ease-in-out;display:inline-flex;align-items:center;justify-content:center;overflow:hidden}.icon-btn.svelte-13zog9y:hover{background-color:rgba(0, 0, 0, 0.04);cursor:pointer}.icon-btn.svelte-13zog9y:active{background-color:rgba(0, 0, 0, 0.08);transform:scale(0.95);cursor:pointer}</style><style id="svelte-omilz8">.close-menu-c.svelte-omilz8.svelte-omilz8{cursor:unset !important;color:#0376ff;position:absolute;z-index:1;border-radius:10px;overflow:hidden;right:0;padding:10px 10px;width:280px;background-color:#fdfdfd;box-shadow:rgba(14, 30, 37, 0.12) 0px 2px 4px 0px, rgba(14, 30, 37, 0.32) 0px 2px 16px 0px}.close-menu-radio-group-c.svelte-omilz8.svelte-omilz8{background-color:#f8f8f8;border-radius:8px;margin:5px;font-size:14px}.close-menu-radio-group-c.svelte-omilz8>label.svelte-omilz8{justify-content:flex-start !important;gap:15px;padding:5px}.ctrl-btn-c.svelte-omilz8.svelte-omilz8{display:flex;gap:6px;align-items:center;margin-top:14px;padding:0 10px}.ctrl-btn-c.svelte-omilz8 button.svelte-omilz8{font-weight:100;padding:0 16px;flex-grow:1}.ctrl-btn-c.svelte-omilz8 button.svelte-omilz8:hover{color:white}.close-menu-radio-group-c.svelte-omilz8 .radio.svelte-omilz8:checked{background-color:#0376ff;border-color:#0376ff}.close-menu-radio-group-c.svelte-omilz8 .radio.svelte-omilz8{border-color:#0376ff}.re-open-text.svelte-omilz8.svelte-omilz8{font-size:13px;text-align:left;color:#7b7b7b;padding-left:10px;vertical-align:center;line-height:1}</style><div id="ModHeader-shadow-root" style="visibility: visible; opacity: 1; transition: visibility 0.3s, opacity 0.3s;"><div id="modheader-tool-suspend-btn" class="memory-view svelte-ol2ow9" style="transform: translate(-1%, 0px); visibility: visible;"><button class="suspend-btn svelte-ol2ow9" style="zoom: 0.68309;"><button class="close-btn-container svelte-ol2ow9" style="visibility: hidden;"><div class="icon-btn close-btn svelte-13zog9y" role="button" tabindex="0" style="width: 24px; height: 24px;"><svg xmlns="http://www.w3.org/2000/svg" width="10" height="10" class="mdi-icon " fill="white" alt="" viewBox="0 0 24 24"><path d="M19,6.41L17.59,5L12,10.59L6.41,5L5,6.41L10.59,12L5,17.59L6.41,19L12,13.41L17.59,19L19,17.59L13.41,12L19,6.41Z"></path></svg></div></button> <div id="close-menu-c" class="svelte-ol2ow9"></div> <div class="tooltip svelte-ol2ow9" i18n="memory_btn_tooltip" style="visibility: hidden; opacity: 0;">page memory usage</div> <div class="memory-button svelte-ol2ow9"><span>44</span> <span>M</span></div></button></div></div></template></div></body></html>

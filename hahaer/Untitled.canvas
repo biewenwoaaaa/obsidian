@@ -1,0 +1,9 @@
+{
+	"nodes":[
+		{"id":"cd675d5a82234a9f","x":-49,"y":-159,"width":250,"height":60,"type":"text","text":""},
+		{"id":"2936c17c262cb0b2","x":-340,"y":-159,"width":220,"height":60,"type":"text","text":"记得讲下伪满洲国政权解散时的历史背景，喻大华书里就说了"}
+	],
+	"edges":[
+		{"id":"1da1450a725d9229","fromNode":"2936c17c262cb0b2","fromSide":"right","toNode":"cd675d5a82234a9f","toSide":"left"}
+	]
+}

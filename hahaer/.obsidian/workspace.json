@@ -1,0 +1,244 @@
+{
+  "main": {
+    "id": "f954a8d252eea235",
+    "type": "split",
+    "children": [
+      {
+        "id": "f41432830c6a76a3",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "262ca14732bae681",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "电磁场/电磁场与电磁波.md",
+                "mode": "source",
+                "source": false
+              },
+              "icon": "lucide-file",
+              "title": "电磁场与电磁波"
+            }
+          },
+          {
+            "id": "a158c096af2468ba",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "OpenGL/OpenGL.md",
+                "mode": "source",
+                "source": false
+              },
+              "icon": "lucide-file",
+              "title": "OpenGL"
+            }
+          }
+        ],
+        "currentTab": 1
+      }
+    ],
+    "direction": "vertical"
+  },
+  "left": {
+    "id": "e94ddf58e31d16a6",
+    "type": "split",
+    "children": [
+      {
+        "id": "ba17dc297aa202e3",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "7d0749e35e516773",
+            "type": "leaf",
+            "state": {
+              "type": "file-explorer",
+              "state": {
+                "sortOrder": "alphabetical",
+                "autoReveal": true
+              },
+              "icon": "lucide-folder-closed",
+              "title": "Files"
+            }
+          },
+          {
+            "id": "d2d5eca9687323e6",
+            "type": "leaf",
+            "state": {
+              "type": "search",
+              "state": {
+                "query": "",
+                "matchingCase": false,
+                "explainSearch": false,
+                "collapseAll": false,
+                "extraContext": false,
+                "sortOrder": "alphabetical"
+              },
+              "icon": "lucide-search",
+              "title": "Search"
+            }
+          },
+          {
+            "id": "29a76ac5118c62c6",
+            "type": "leaf",
+            "state": {
+              "type": "bookmarks",
+              "state": {},
+              "icon": "lucide-bookmark",
+              "title": "Bookmarks"
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "horizontal",
+    "width": 300
+  },
+  "right": {
+    "id": "adb5f19976370a69",
+    "type": "split",
+    "children": [
+      {
+        "id": "afcf37287ae36c4d",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "561aeedd760864be",
+            "type": "leaf",
+            "state": {
+              "type": "backlink",
+              "state": {
+                "file": "OpenGL/OpenGL.md",
+                "collapseAll": false,
+                "extraContext": false,
+                "sortOrder": "alphabetical",
+                "showSearch": true,
+                "searchQuery": "",
+                "backlinkCollapsed": false,
+                "unlinkedCollapsed": false
+              },
+              "icon": "links-coming-in",
+              "title": "Backlinks for OpenGL"
+            }
+          },
+          {
+            "id": "830e875087a79fee",
+            "type": "leaf",
+            "state": {
+              "type": "outgoing-link",
+              "state": {
+                "file": "OpenGL/OpenGL.md",
+                "linksCollapsed": false,
+                "unlinkedCollapsed": true
+              },
+              "icon": "links-going-out",
+              "title": "Outgoing links from OpenGL"
+            }
+          },
+          {
+            "id": "d1ee0bfbebc7fd10",
+            "type": "leaf",
+            "state": {
+              "type": "tag",
+              "state": {
+                "sortOrder": "frequency",
+                "useHierarchy": false,
+                "showSearch": false,
+                "searchQuery": ""
+              },
+              "icon": "lucide-tags",
+              "title": "Tags"
+            }
+          },
+          {
+            "id": "c5dcdebd99d75140",
+            "type": "leaf",
+            "state": {
+              "type": "outline",
+              "state": {
+                "file": "OpenGL/OpenGL.md",
+                "followCursor": false,
+                "showSearch": true,
+                "searchQuery": ""
+              },
+              "icon": "lucide-list",
+              "title": "Outline of OpenGL"
+            }
+          }
+        ],
+        "currentTab": 2
+      }
+    ],
+    "direction": "horizontal",
+    "width": 293.5
+  },
+  "left-ribbon": {
+    "hiddenItems": {
+      "bases:Create new base": false,
+      "switcher:Open quick switcher": false,
+      "graph:Open graph view": false,
+      "canvas:Create new canvas": false,
+      "daily-notes:Open today's daily note": false,
+      "templates:Insert template": false,
+      "obsidian-excalidraw-plugin:Create new drawing": false,
+      "command-palette:Open command palette": false,
+      "obsidian-excalidraw-plugin:New drawing": false
+    }
+  },
+  "active": "a158c096af2468ba",
+  "lastOpenFiles": [
+    "OpenGL/OpenGL Learning.md",
+    "OpenGL/OpenGL.md",
+    "MySQL/MySQL.md",
+    "Excalidraw/Drawing 2025-08-27 15.07.36.excalidraw.md",
+    "Excalidraw/Drawing 2025-05-16 13.51.22.excalidraw.md",
+    "Excalidraw/Drawing 2025-05-13 17.36.03.excalidraw.md",
+    "Excalidraw/Drawing 2024-10-08 13.42.20.excalidraw.md",
+    "magicCube/MagicCube.md",
+    "Linux/Linux.md",
+    "C++集群服务器开发/GDB常用命令.md",
+    "分布式mprpc项目/笔记.md",
+    "分布式mprpc项目/Pasted image 20250619161223.png",
+    "分布式mprpc项目/CMake line by line - Creating a library _ SoftwareCraft_files/cmake-best-practices-2nd-edition.jpg",
+    "C++集群服务器开发/Pasted image 20250521161223.png",
+    "C++集群服务器开发/Pasted image 20250521205213.png",
+    "C++集群服务器开发/Pasted image 20250521204624.png",
+    "C++集群服务器开发/Pasted image 20250521161855.png",
+    "C++集群服务器开发/C++集群服务器开发.md",
+    "分布式mprpc项目/CMake line by line - Creating a library _ SoftwareCraft_files/app.css",
+    "分布式mprpc项目/CMake line by line - Creating a library _ SoftwareCraft_files/cdn.min.js.download",
+    "分布式mprpc项目/CMake line by line - Creating a library _ SoftwareCraft_files/js.cookie.min.js.download",
+    "分布式mprpc项目/CMake line by line - Creating a library _ SoftwareCraft_files/all.min.css",
+    "分布式mprpc项目/CMake line by line - Creating a library _ SoftwareCraft_files/plausible.js.download",
+    "分布式mprpc项目/CMake line by line - Creating a library _ SoftwareCraft_files/app.js.download",
+    "分布式mprpc项目/CMake line by line - Creating a library _ SoftwareCraft_files/bulma-social.min.css",
+    "分布式mprpc项目/CMake line by line - Creating a library _ SoftwareCraft.html",
+    "分布式mprpc项目/CMake line by line - Creating a library _ SoftwareCraft_files",
+    "流浪的王妃/虚惊一场素材/婉容视频.mp4",
+    "电磁场/电磁场与电磁波.md",
+    "面经2.md",
+    "面经.md",
+    "docker.md",
+    "流浪的王妃/虚惊一场素材/cacfd6e1-3e23-43bf-af97-594861a5b5f1.jpg",
+    "流浪的王妃/政治联姻素材/f69b5062-539c-41e3-95af-1bbf3afb5675.jpg",
+    "流浪的王妃/政治联姻素材/imgi_92_1280.jpeg",
+    "流浪的王妃/imgi_92_1280.jpeg",
+    "电磁场/Drawing 2025-08-27 15.10.32.excalidraw.md",
+    "Untitled 2.canvas",
+    "溥仪.md",
+    "SpdLog.md",
+    "hitfilm 剪辑教学.md",
+    "流浪的王妃/演讲大纲.canvas",
+    "流浪的王妃/皇弟与妃.md",
+    "流浪的王妃/流浪的王妃.md",
+    "Untitled 1.md",
+    "Untitled 2.md",
+    "Untitled 1.canvas",
+    "Untitled 3.canvas",
+    "Excalidraw/Drawing 2025-05-13 17.36.02.excalidraw.md",
+    "Untitled.canvas",
+    "讲故事.md",
+    "findAJob/want.canvas"
+  ]
+}

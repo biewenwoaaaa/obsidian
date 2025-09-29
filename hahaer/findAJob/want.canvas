@@ -1,0 +1,32 @@
+{
+	"nodes":[
+		{"id":"f5d2118d95dbaae2","type":"file","file":"findAJob/数字天堂.md","x":424,"y":-140,"width":250,"height":60},
+		{"id":"7e74efef21aa80ad","type":"text","text":"发展方向目前是c++ Qt软件开发，接下来兼顾嵌入式+消费电子","x":-120,"y":-240,"width":297,"height":79},
+		{"id":"10795471bb3122af","type":"text","text":"目标技术全栈，到时候可以独立负责一个项目的软硬件前后，争取可以不依赖于具体的公司，甚至自我创业","x":-120,"y":-141,"width":323,"height":88},
+		{"id":"546537ca9eeb8236","type":"text","text":"单位得有年轻的女生，形象不难看，身材正常，不为择偶，只求单位正常\n但是领导层不能是不懂战略的老娘们","x":-120,"y":-33,"width":357,"height":100},
+		{"id":"6c80996c58e007f2","type":"text","text":"直属领导+单位是技术流，有人替说话，注重技术，保持客观，不吹牛逼,形象善良\n","x":-120,"y":-338,"width":297,"height":80},
+		{"id":"6922046f66cb3a9f","type":"text","text":"在公司干事情是有人管的，不是自己一个人单干，啥都自己解决，他们什么都不管","x":-120,"y":87,"width":381,"height":80},
+		{"id":"68224b532fe8b1c9","type":"text","text":"晚上的时间是自己的","x":-120,"y":187,"width":250,"height":60},
+		{"id":"eac13ba9ed3260a0","type":"text","text":"公司扁平化，氛围轻松，有人讲笑话","x":-120,"y":267,"width":357,"height":60},
+		{"id":"a514e0679271d16c","type":"text","text":"面试准备问领导的问题","x":-460,"y":423,"width":250,"height":60},
+		{"id":"c619c59122a3928e","type":"text","text":"理想的工作","x":-460,"y":-33,"width":160,"height":60},
+		{"id":"bcb8e0816869fce1","type":"text","text":"问直属领导2个问题：\n1. 职务分为管理+技术，甚至技术路线也分技术管理，你觉得管理到底是在管什么\n2. 大话西游中，唐僧“黑锅我来背，送死你去”，单从这句话来讲，你觉得唐僧算不算好的管理者\n3. 注释比例，英文中文，设计文档、几个人？\n4. 自己写的类，如何用哦stream《《的方式输出？（ostream友元函数，重载《《运算符）\n5. 函数的返回值可不可以是个右值引用？","x":-120,"y":366,"width":460,"height":204},
+		{"id":"3aa5ad0397080bc8","type":"text","text":"高学历的公司，领导有岁数大的人","x":-120,"y":-418,"width":250,"height":60},
+		{"id":"f61129532da150fa","type":"text","text":"是否双休","x":-120,"y":580,"width":250,"height":60},
+		{"id":"9d28209af88ffca8","type":"file","file":"findAJob/瑞盖科技.md","x":424,"y":-33,"width":250,"height":60,"color":"1"},
+		{"id":"64ec74c02ee87fab","type":"file","file":"findAJob/梅卡曼德.md","x":424,"y":-310,"width":250,"height":110},
+		{"id":"dc772d306cf878c2","type":"file","file":"findAJob/因时机器人.md","x":424,"y":68,"width":316,"height":99},
+		{"id":"2de4e5f8035e71ec","type":"file","file":"findAJob/知形科技.md","x":424,"y":217,"width":250,"height":60},
+		{"id":"229d0525ddc56893","type":"file","file":"findAJob/澜景科技.md","x":424,"y":428,"width":250,"height":60},
+		{"id":"686dfa0fde92d5e3","type":"file","file":"findAJob/云泊软件.md","x":424,"y":542,"width":250,"height":60},
+		{"id":"1fb467c8edf0d693","type":"file","file":"findAJob/万旺科技.md","x":424,"y":658,"width":250,"height":60},
+		{"id":"56495ff49c4e333a","type":"file","file":"findAJob/Qt 公司.md","x":424,"y":341,"width":250,"height":50},
+		{"id":"67f288ca1f85ccf5","type":"file","file":"精英数科.md","x":424,"y":760,"width":250,"height":60}
+	],
+	"edges":[
+		{"id":"f76ec4e8d6f452ad","fromNode":"c619c59122a3928e","fromSide":"right","toNode":"eac13ba9ed3260a0","toSide":"left"},
+		{"id":"dc752135b9d103fb","fromNode":"c619c59122a3928e","fromSide":"right","toNode":"3aa5ad0397080bc8","toSide":"left"},
+		{"id":"8e53085da959316d","fromNode":"a514e0679271d16c","fromSide":"right","toNode":"bcb8e0816869fce1","toSide":"left"},
+		{"id":"d00a75bc924b718f","fromNode":"a514e0679271d16c","fromSide":"bottom","toNode":"f61129532da150fa","toSide":"left"}
+	]
+}

@@ -1,0 +1,144 @@
+/*  Copyright (c) CodeMachine Inc. 2000-2021, All rights reserved. */
+
+/*  GLOBAL  */
+
+body {
+    text-align: left; 
+    font-family: 'Verdana', sans-serif;
+    font-weight: 400;
+    font-size: 16px;
+}
+
+h1 {
+    margin-top: 40px;
+    margin-bottom: 40px;
+}
+h3 {
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+h5 {
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+i {
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+/* custom classes */
+.pageborder {
+    margin: 20px;
+}
+.pagetitlebg {
+    background-color: #D3D3D3;
+}
+.pagetitle {
+    margin: 50px;
+    padding-top: 50px;
+    padding-bottom: 50px;
+}
+
+.subsection {
+    padding-top: 20px;
+    padding-bottom: 20px;
+}
+.coursedesc:hover {
+    background-color: #f8f9fa;
+}
+.courseicon {
+    height:64px; 
+    width:64px;
+}
+
+.twitteritem {
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+.commentitem {
+    margin-top: 20px;
+    margin-bottom: 20px;
+    padding: 20px;
+}
+
+.faqitem {
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+.subtopic {
+    margin-top: 20px;
+    margin-bottom: 20px;
+    padding: 20px;
+    background-color: #f8f9fa;
+}
+
+.announce {
+    padding: 50px;
+    background-color: darkgray;
+    color: black;
+}
+
+/* subdued links */
+.linksub{ 
+    text-decoration: none;
+    color: lightgrey;
+}
+
+.linksub:link {
+    color: lightgrey;
+}
+
+.linksub:hover {
+    color: white;
+}
+
+/* article.html */
+.articleitem {
+    margin-top: 20px;
+    margin-bottom: 20px;
+    padding: 20px;
+}
+
+/* artciles/*.html */
+
+.highlight
+{
+    background:yellow;
+}
+
+.comment
+{
+    background:lightgrey;
+}
+
+pre {
+    padding: 10px;
+    font-family: "Consolas", "Lucida Console", monospace;
+    font-size: 14px;
+    background-color: lightgrey;
+    border-radius: 7px;
+    white-space: pre-wrap;
+    word-break: keep-all;
+}
+
+/* index.html / featurepanel */
+
+.featurepanel h1 {
+    text-align: center;
+}
+
+.featurepanel .row {
+    margin-top: 20px;
+    margin-bottom: 20px;
+    vertical-align: baseline;
+    text-align:center;
+}
+
+.featurepanel .col {
+    margin-left: 20px;
+    margin-right: 20px;
+}

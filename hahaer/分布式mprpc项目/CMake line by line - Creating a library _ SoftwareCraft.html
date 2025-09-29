@@ -1,0 +1,662 @@
+<!DOCTYPE html>
+<!-- saved from url=(0045)https://softwarecraft.ch/cmake-library-setup/ -->
+<html dir="ltr" lang="en" class=" "><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#ffffff">
+    <link rel="stylesheet" href="./CMake line by line - Creating a library _ SoftwareCraft_files/app.css">
+    <link rel="shortcut icon" type="image/png" href="https://softwarecraft.ch/images/favicon.ico">
+    <script defer="" src="./CMake line by line - Creating a library _ SoftwareCraft_files/cdn.min.js.download"></script>
+    <script src="./CMake line by line - Creating a library _ SoftwareCraft_files/js.cookie.min.js.download"></script>
+    <link rel="stylesheet" href="./CMake line by line - Creating a library _ SoftwareCraft_files/all.min.css" integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg==" crossorigin="anonymous" referrerpolicy="no-referrer">
+    
+        <link rel="stylesheet" href="./CMake line by line - Creating a library _ SoftwareCraft_files/bulma-social.min.css">
+    
+    <!-- Begin Jekyll SEO tag v2.8.0 -->
+<title>CMake line by line - Creating a library | SoftwareCraft</title>
+<meta name="generator" content="Jekyll v4.3.4">
+<meta property="og:title" content="CMake line by line - Creating a library">
+<meta name="author" content="Dominik">
+<meta property="og:locale" content="en_US">
+<meta name="description" content="How to set up a library with CMake, including proper symbol visibility and installation">
+<meta property="og:description" content="How to set up a library with CMake, including proper symbol visibility and installation">
+<link rel="canonical" href="https://softwarecraft.ch//cmake-library-setup/">
+<meta property="og:url" content="https://softwarecraft.ch//cmake-library-setup/">
+<meta property="og:site_name" content="SoftwareCraft">
+<meta property="og:image" content="https://softwarecraft.ch//images/cmake-logo.png">
+<meta property="og:type" content="article">
+<meta property="article:published_time" content="2024-01-24T00:00:00+00:00">
+<meta name="twitter:card" content="summary_large_image">
+<meta property="twitter:image" content="https://softwarecraft.ch//images/cmake-logo.png">
+<meta property="twitter:title" content="CMake line by line - Creating a library">
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"Dominik"},"dateModified":"2024-01-24T00:00:00+00:00","datePublished":"2024-01-24T00:00:00+00:00","description":"How to set up a library with CMake, including proper symbol visibility and installation","headline":"CMake line by line - Creating a library","image":"https://softwarecraft.ch//images/cmake-logo.png","mainEntityOfPage":{"@type":"WebPage","@id":"https://softwarecraft.ch//cmake-library-setup/"},"url":"https://softwarecraft.ch//cmake-library-setup/"}</script>
+<!-- End Jekyll SEO tag -->
+
+    <script defer="" data-domain="softwarecraft.ch" src="./CMake line by line - Creating a library _ SoftwareCraft_files/plausible.js.download"></script>
+<style>
+  .imageye-selected {
+    outline: 2px solid black !important;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5) !important;
+  }
+</style></head>
+
+    <body>
+        <a href="https://softwarecraft.ch/cmake-library-setup/#main-content" class="is-sr-only skip-link"> Skip to main content </a>
+
+        
+        <nav class="navbar is-primary " x-data="{ openNav: false }">
+    <div class="container">
+        <div class="navbar-brand">
+            <a href="https://softwarecraft.ch/" class="navbar-item">
+                SoftwareCraft
+            </a>
+            <a role="button" class="navbar-burger burger" aria-label="menu" aria-expanded="false" data-target="navMenu" :class="{ &#39;is-active&#39;: openNav }" x-on:click="openNav = !openNav">
+                <span aria-hidden="true"></span>
+                <span aria-hidden="true"></span>
+                <span aria-hidden="true"></span>
+            </a>
+        </div>
+        <div class="navbar-menu" id="navMenu" :class="{ &#39;is-active&#39;: openNav }">
+            <div class="navbar-start">
+                <a href="https://softwarecraft.ch/" class="navbar-item ">Home</a>
+                
+                
+                
+                <div class="navbar-item has-dropdown is-hoverable ">
+                    <a href="https://softwarecraft.ch/services/" class="navbar-link ">Services</a>
+                    <div class="navbar-dropdown">
+                        
+                        <a href="https://softwarecraft.ch/services/software-delivery-consulting/" class="navbar-item ">Software Delivery Consulting</a>
+                        
+                        <a href="https://softwarecraft.ch/services/workshops/" class="navbar-item ">Workshops</a>
+                        
+                        <a href="https://softwarecraft.ch/services/project-work/" class="navbar-item ">Software Projects</a>
+                        
+                    </div>
+                </div>
+                
+                
+                
+                <a href="https://softwarecraft.ch/blog/" class="navbar-item ">Blog</a>
+                
+                
+                
+                <a href="https://softwarecraft.ch/cmake-best-practices/" class="navbar-item ">CMake Best Practices</a>
+                
+                
+                
+                <div class="navbar-item has-dropdown is-hoverable ">
+                    <a href="https://softwarecraft.ch/about/" class="navbar-link ">About</a>
+                    <div class="navbar-dropdown">
+                        
+                        <a href="https://softwarecraft.ch/about" class="navbar-item ">About</a>
+                        
+                        <a href="https://softwarecraft.ch/about/contact" class="navbar-item ">Contact</a>
+                        
+                        <a href="https://softwarecraft.ch/about/privacy" class="navbar-item ">Privacy Policy</a>
+                        
+                    </div>
+                </div>
+                
+                
+                
+            </div>
+
+            <div class="navbar-end">
+                
+
+                
+                
+                
+                <a class="navbar-item is-active" href="https://softwarecraft.ch/cmake-library-setup/">
+                    <span class="icon"><i class="fas fa-globe"></i></span>
+                    <span>EN</span>
+                </a>
+                
+                
+                
+                <a class="navbar-item" href="https://softwarecraft.ch/de/cmake-library-setup/">
+                    <span class="icon"><i class="fas fa-globe"></i></span>
+                    <span>DE</span>
+                </a>
+                
+                
+                
+
+            </div>
+        </div>
+    </div>
+</nav>
+        
+            <section class="hero  is-medium  is-bold is-primary" style="background: url(&#39;/images/cmake-logo.png&#39;) no-repeat center center; background-size: cover;">
+    <div class="hero-body  hero-darken ">
+        <div class="container">
+            <h1 class="title is-2">CMake line by line - Creating a library</h1>
+            <p class="subtitle is-3"></p>
+            
+        </div>
+    </div>
+</section>
+
+        
+        
+
+        <section class="section">
+            <div class="container">
+                <div class="columns is-multiline">
+                    
+                    <main class="column is-12" id="main-content">
+                        
+
+                        
+
+                        
+
+                        
+
+                        <div class="content">
+    <p>Published: Jan 24, 2024 by Dominik</p>
+
+    
+
+    <p>author: Dominik</p>
+
+<p><strong>Creating a clean library that has proper symbol visibility and installation instructions might sound difficult.</strong> However with CMake it is relatively straight forward to set up, even if there are a few things to consider. Actually creating creating a library is as simple as invoking the <code class="language-plaintext highlighter-rouge">add_library()</code> command and adding the sources to it. When it comes to setting up the installation instructions and symbol visibility properly there is a bit more to it. There are also some small, but useful things like defining the version compatibility of the library that make the life of developers a lot easier if done properly.</p>
+
+<p>In this post, we will go through the steps to create a library with CMake, including proper symbol visibility and installation. All the code for this post is available as <a href="https://github.com/bernedom/CMake_Library_Template">a template on GitHub</a></p>
+
+<h2 id="creating-a-library-with-cmake---a-quick-overview">Creating a library with CMake - A quick overview</h2>
+
+<p>When configuring for a library with CMake we need to do the following things:</p>
+
+<ol>
+  <li>Creating the library and adding the sources to it</li>
+  <li>Setting version compatibility</li>
+  <li>Specifying which include files are public and private</li>
+  <li>Setting symbol visibility and creating an export header</li>
+  <li>Defining where to install the library and make it usable with <code class="language-plaintext highlighter-rouge">find_package()</code>
+</li>
+  <li>Some miscellaneous things like setting the C++ standard and debug suffix</li>
+</ol>
+
+<p>For detailed documentation on the commands used in this post, please refer to the <a href="https://cmake.org/cmake/help/latest/">CMake documentation</a>.</p>
+
+<style>
+    /* Default: Light theme → make box darker */
+    .contrast-box {
+        background-color: hsla(0, 0%, 94%, 0.918);
+        margin-bottom: 1.5em;
+        padding: 0.5em;
+    }
+
+    /* Dark theme → make box lighter */
+    @media (prefers-color-scheme: dark) {
+
+        .contrast-box {
+            background-color: hsla(0, 0%, 89%, 0.055);
+        }
+    }
+</style>
+
+<div class="contrast-box">
+    <h1><a href="https://www.packtpub.com/en-us/product/cmake-best-practices-9781835880647">
+            CMake Best Practices - The book</a></h1>
+
+    <div style="display: grid; width: 100%; grid-template-columns: 25% 1fr; grid-gap: 1%; padding-bottom: 0.5em;">
+        <div>
+
+            <a href="https://www.packtpub.com/en-us/product/cmake-best-practices-9781835880647">
+                <img src="./CMake line by line - Creating a library _ SoftwareCraft_files/cmake-best-practices-2nd-edition.jpg" alt="Cover of the CMake Best Practices book 2nd Edition by Dominik Berner and Mustafa Kemal Gilor" style="max-width:100%;height:auto;display:block">
+
+            </a>
+
+        </div>
+        <div>
+            CMake Best Practices: Discover proven techniques for creating and maintaining programming projects with
+            CMake. Learn how to use CMake to maximum efficiency with this compendium of best practices for a lot of
+            common tasks when building C++ software.
+            <br>
+            <br>
+            <div class="order-button">
+                <a href="https://www.packtpub.com/en-us/product/cmake-best-practices-9781835880647">Get it from
+                    Packt</a>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<h2 id="setting-up-the-project">Setting up the project</h2>
+
+<p>Choosing the right file structure for a project is always important as it makes it easier to find files and helps to keep the project organized. For libraries it is even more important, as others will want to use the library as well. Usually, not all files needed to build a library are necessary to use the library, so a clean separation helps to only install the files that are needed. For this post, we will create a library called “Greeter” or “libGreeter” and use the following file structure:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>├── CMakeLists.txt <span class="c"># the main CMakeLists.txt file</span>
+├── LICENSE
+├── README.md
+├── cmake <span class="c"># CMake modules</span>
+│&nbsp;&nbsp; └── GreeterConfig.cmake.in
+├── include <span class="c"># public headers</span>
+│&nbsp;&nbsp; └── greeter
+│&nbsp;&nbsp;     └── hello.hpp
+└── src <span class="c"># source files</span>
+    ├── hello.cpp
+    ├── internal.cpp
+    └── internal.hpp
+</code></pre></div></div>
+
+<p>The library will expose a class <code class="language-plaintext highlighter-rouge">Greeter::Hello</code> that contains a <code class="language-plaintext highlighter-rouge">greet()</code> function that prints “Hello ${name} from a library” and it is declared in the <code class="language-plaintext highlighter-rouge">include/hello/hello.hpp</code>. Internally it uses a private function called <code class="language-plaintext highlighter-rouge">print_impl</code> which is defined in The <code class="language-plaintext highlighter-rouge">internal.cpp</code> and <code class="language-plaintext highlighter-rouge">internal.hpp</code> files. These are used to demonstrate how to hide symbols from the library interface. The <code class="language-plaintext highlighter-rouge">GreeterConfig.cmake.in</code> file is used to configure the CMake package file that will be used to make the library usable with <code class="language-plaintext highlighter-rouge">find_package()</code>.</p>
+
+<p>Let’s have a look at the public header file <code class="language-plaintext highlighter-rouge">include/greeter/hello.hpp</code>:</p>
+
+<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">#pragma once
+</span>
+<span class="cp">#include</span> <span class="cpf">&lt;greeter/export_greeter.hpp&gt;</span><span class="cp">
+#include</span> <span class="cpf">&lt;string&gt;</span><span class="cp">
+</span>
+<span class="k">namespace</span> <span class="n">Greeter</span> <span class="p">{</span>
+<span class="c1">/// Example class that is explicitly exported into a library</span>
+<span class="k">class</span> <span class="nc">GREETER_EXPORT</span> <span class="n">Hello</span> <span class="p">{</span>
+<span class="nl">public:</span>
+  <span class="n">Hello</span><span class="p">(</span><span class="k">const</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="o">&amp;</span><span class="n">name</span><span class="p">)</span> <span class="o">:</span> <span class="n">name_</span><span class="p">{</span><span class="n">name</span><span class="p">}</span> <span class="p">{}</span>
+
+  <span class="kt">void</span> <span class="n">greet</span><span class="p">()</span> <span class="k">const</span><span class="p">;</span>
+
+<span class="k">private</span><span class="o">:</span>
+  <span class="k">const</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="n">name_</span><span class="p">;</span>
+<span class="p">};</span>
+<span class="p">}</span> <span class="c1">// namespace Greeter</span>
+</code></pre></div></div>
+
+<p>Two things are notable in this class, first, the including of the <code class="language-plaintext highlighter-rouge">&lt;greeter/export_header.hpp&gt;</code> file and second, the <code class="language-plaintext highlighter-rouge">GREETER_EXPORT</code> macro. The <code class="language-plaintext highlighter-rouge">export_greeter.hpp</code> file is generated by CMake and contains the necessary macros to export symbols from the library. The <code class="language-plaintext highlighter-rouge">GREETER_EXPORT</code> macro is used to mark the class as exported. This makes the class visible to users of the library and marks the class <code class="language-plaintext highlighter-rouge">Greeter::Hello</code> as part of the public API. The export header is generated by CMake and we will look at it later.</p>
+
+<h2 id="creating-the-library-with-cmake">Creating the library with CMake</h2>
+
+<p>Let’s have a look at the <code class="language-plaintext highlighter-rouge">CMakeLists.txt</code> file line by line.</p>
+
+<details open="">
+  <summary>
+Click here to expand the full FindLibrary.cmake
+</summary>
+
+  <div class="language-cmake highlighter-rouge">
+<div class="highlight"><pre class="highlight"><code><span class="nb">cmake_minimum_required</span><span class="p">(</span>VERSION 3.17<span class="p">)</span>
+
+<span class="nb">project</span><span class="p">(</span>
+    Greeter
+    VERSION 1.0.0
+    DESCRIPTION
+        <span class="s2">"A simple C++ project to demonstrate creating executables and libraries in CMake"</span>
+    LANGUAGES CXX
+<span class="p">)</span>
+
+<span class="c1"># set the postfix "d" for the resulting .so or .dll files when building the</span>
+<span class="c1"># library in debug mode</span>
+<span class="nb">set</span><span class="p">(</span>CMAKE_DEBUG_POSTFIX
+    d
+<span class="p">)</span>
+
+<span class="c1"># add the library target and an alias</span>
+<span class="nb">add_library</span><span class="p">(</span>Greeter<span class="p">)</span>
+<span class="nb">add_library</span><span class="p">(</span>Greeter::Greeter ALIAS Greeter<span class="p">)</span>
+
+<span class="c1"># set properties for the target. VERSION set the library version to the project</span>
+<span class="c1"># version * SOVERSION set the compatibility  version for the library to the</span>
+<span class="c1"># major number of the version</span>
+<span class="nb">set_target_properties</span><span class="p">(</span>
+    Greeter
+    PROPERTIES VERSION <span class="si">${</span><span class="nv">PROJECT_VERSION</span><span class="si">}</span>
+               SOVERSION <span class="si">${</span><span class="nv">PROJECT_VERSION_MAJOR</span><span class="si">}</span>
+<span class="p">)</span>
+
+<span class="c1"># add sources to the library target</span>
+<span class="nb">target_sources</span><span class="p">(</span>
+    Greeter
+    PRIVATE src/hello.cpp src/internal.cpp
+<span class="p">)</span>
+
+<span class="c1"># define the C++ standard needed to compile this library and make it visible to</span>
+<span class="c1"># dependers</span>
+<span class="nb">target_compile_features</span><span class="p">(</span>
+    Greeter
+    PUBLIC cxx_std_17
+<span class="p">)</span>
+
+<span class="c1"># set the include directories</span>
+<span class="nb">target_include_directories</span><span class="p">(</span>
+    Greeter
+    PRIVATE src
+    PUBLIC $&lt;BUILD_INTERFACE:<span class="si">${</span><span class="nv">CMAKE_CURRENT_SOURCE_DIR</span><span class="si">}</span>/include&gt;
+    $&lt;INSTALL_INTERFACE:<span class="si">${</span><span class="nv">CMAKE_INSTALL_INCLUDEDIR</span><span class="si">}</span>&gt;
+<span class="p">)</span>
+
+<span class="c1"># if using limited visibility, set CXX_VISIBILILTY_PRESET to "hidden"</span>
+<span class="nb">include</span><span class="p">(</span>GenerateExportHeader<span class="p">)</span>
+<span class="nb">set_property</span><span class="p">(</span>
+    TARGET Greeter
+    PROPERTY CXX_VISIBILITY_PRESET <span class="s2">"hidden"</span>
+<span class="p">)</span>
+<span class="c1"># Hide inlined functions by default, reducing the size of the library</span>
+<span class="nb">set_property</span><span class="p">(</span>
+    TARGET Greeter
+    PROPERTY VISIBILITY_INLINES_HIDDEN TRUE
+<span class="p">)</span>
+<span class="c1"># this command generates a header file in the CMAKE_CURRENT_BINARY_DIR which</span>
+<span class="c1"># sets the visibility attributes according to the compiler settings</span>
+<span class="nf">generate_export_header</span><span class="p">(</span>
+    Greeter
+    EXPORT_FILE_NAME
+    export/greeter/export_greeter.hpp
+<span class="p">)</span>
+<span class="c1"># Add CMAKE_CURRENT_BINARY_DIR to the include path so the generated header can</span>
+<span class="c1"># be found</span>
+<span class="nb">target_include_directories</span><span class="p">(</span>
+    Greeter
+    PUBLIC $&lt;BUILD_INTERFACE:<span class="si">${</span><span class="nv">CMAKE_CURRENT_BINARY_DIR</span><span class="si">}</span>/export&gt;
+    $&lt;INSTALL_INTERFACE:<span class="si">${</span><span class="nv">CMAKE_INSTALL_INCLUDEDIR</span><span class="si">}</span>&gt;
+    
+<span class="p">)</span>
+
+<span class="c1"># include the GNUInstallDirs module to get the canonical install paths defined</span>
+<span class="nb">include</span><span class="p">(</span>GNUInstallDirs<span class="p">)</span>
+
+<span class="c1"># Install the library and export the CMake targets</span>
+<span class="nb">install</span><span class="p">(</span>
+    TARGETS Greeter
+    EXPORT GreeterTargets
+    LIBRARY DESTINATION <span class="si">${</span><span class="nv">CMAKE_INSTALL_LIBDIR</span><span class="si">}</span>
+    ARCHIVE DESTINATION <span class="si">${</span><span class="nv">CMAKE_INSTALL_LIBDIR</span><span class="si">}</span>
+    RUNTIME DESTINATION <span class="si">${</span><span class="nv">CMAKE_INSTALL_BINDIR</span><span class="si">}</span>
+    INCLUDES DESTINATION <span class="si">${</span><span class="nv">CMAKE_INSTALL_INCLUDEDIR</span><span class="si">}</span>
+<span class="p">)</span>
+<span class="c1"># install the public headers</span>
+<span class="nb">install</span><span class="p">(</span>DIRECTORY include/ DESTINATION <span class="si">${</span><span class="nv">CMAKE_INSTALL_INCLUDEDIR</span><span class="si">}</span><span class="p">)</span>
+
+<span class="c1"># install the generated export header</span>
+<span class="nb">install</span><span class="p">(</span>
+    FILES <span class="s2">"</span><span class="si">${</span><span class="nv">CMAKE_CURRENT_BINARY_DIR</span><span class="si">}</span><span class="s2">/export/greeter/export_greeter.hpp"</span>
+    DESTINATION <span class="si">${</span><span class="nv">CMAKE_INSTALL_INCLUDEDIR</span><span class="si">}</span>/greeter
+<span class="p">)</span>
+
+<span class="c1"># configure the CMake package file so the libray can be included with find_package() later</span>
+<span class="nb">include</span><span class="p">(</span>CMakePackageConfigHelpers<span class="p">)</span>
+
+<span class="nf">write_basic_package_version_file</span><span class="p">(</span>
+    <span class="s2">"GreeterConfigVersion.cmake"</span>
+    VERSION <span class="si">${</span><span class="nv">PROJECT_VERSION</span><span class="si">}</span>
+    COMPATIBILITY SameMajorVersion<span class="p">)</span>
+
+<span class="nf">configure_package_config_file</span><span class="p">(</span>
+    <span class="s2">"</span><span class="si">${</span><span class="nv">CMAKE_CURRENT_LIST_DIR</span><span class="si">}</span><span class="s2">/cmake/GreeterConfig.cmake.in"</span>
+    <span class="s2">"</span><span class="si">${</span><span class="nv">CMAKE_CURRENT_BINARY_DIR</span><span class="si">}</span><span class="s2">/GreeterConfig.cmake"</span>
+    INSTALL_DESTINATION <span class="si">${</span><span class="nv">CMAKE_INSTALL_DATAROOTDIR</span><span class="si">}</span>/cmake/greeter
+<span class="p">)</span>
+
+<span class="c1"># install the CMake targets</span>
+<span class="nb">install</span><span class="p">(</span>
+    EXPORT GreeterTargets
+    FILE GreeterTargets.cmake
+    NAMESPACE Greeter::
+    DESTINATION <span class="si">${</span><span class="nv">CMAKE_INSTALL_DATAROOTDIR</span><span class="si">}</span>/cmake/greeter
+<span class="p">)</span>
+</code></pre></div>  </div>
+</details>
+
+<h2 id="setting-up-the-library">Setting up the library</h2>
+
+<p>As usual the <code class="language-plaintext highlighter-rouge">CMakeLists.txt</code> starts with <code class="language-plaintext highlighter-rouge">cmake_minimum_required</code> which specifies the minimum CMake version to be used and the <code class="language-plaintext highlighter-rouge">project()</code> call.</p>
+
+<div class="language-cmake highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">project</span><span class="p">(</span>
+    Greeter
+    VERSION 1.0.0
+    DESCRIPTION
+        <span class="s2">"A simple C++ project to demonstrate creating executables and libraries in CMake"</span>
+    LANGUAGES CXX
+<span class="p">)</span>
+</code></pre></div></div>
+
+<p>For libraries the <code class="language-plaintext highlighter-rouge">VERSION</code> field is important, as this is used to determine the version compatibility of the library. The <code class="language-plaintext highlighter-rouge">LANGUAGES</code> field is optional, but it is good practice to specify the language used in the project. This will make sure that the correct compiler is used when building the project.</p>
+
+<p>The next thing to do is to set a debug postfix for the library with <code class="language-plaintext highlighter-rouge">set(CMAKE_DEBUG_POSTFIX d)</code>. This means when building the library in debug mode, it will append a “d” to the resulting library file. This is useful to distinguish between debug and release builds of the library, but it is an optional step. This is a global option for the project, so it will affect all libraries and executables inside the project.</p>
+
+<p>After that the library target is created with <code class="language-plaintext highlighter-rouge">add_library(Greeter)</code>. This will create a library target called <code class="language-plaintext highlighter-rouge">Greeter</code> which can be used to add sources, set properties and link against other libraries. To make the library usable with <code class="language-plaintext highlighter-rouge">find_package()</code> the same way as if it was included with <code class="language-plaintext highlighter-rouge">add_subdirectory</code> or with <code class="language-plaintext highlighter-rouge">FetchContent</code> we also create an alias for the library with <code class="language-plaintext highlighter-rouge">add_library(Greeter::Greeter ALIAS Greeter)</code>.</p>
+
+<p>That way all targets that use the library can use <code class="language-plaintext highlighter-rouge">Greeter::Greeter</code> instead of just <code class="language-plaintext highlighter-rouge">Greeter</code>. This is useful to avoid name clashes and to make it clear that the target is a library.</p>
+
+<p>Once the target is defined we can set the properties for the library.</p>
+
+<div class="language-cmake highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">set_target_properties</span><span class="p">(</span>
+    Greeter
+    PROPERTIES VERSION <span class="si">${</span><span class="nv">PROJECT_VERSION</span><span class="si">}</span>
+               SOVERSION <span class="si">${</span><span class="nv">PROJECT_VERSION_MAJOR</span><span class="si">}</span>
+<span class="p">)</span>
+</code></pre></div></div>
+
+<p>The <code class="language-plaintext highlighter-rouge">VERSION</code> property sets the version of the library to the project version. The <code class="language-plaintext highlighter-rouge">SOVERSION</code> property sets the compatibility version of the library to the major version of the project. Generally you should try to use <a href="https://semver.org/">semantic versioning</a> for libraries and set the <code class="language-plaintext highlighter-rouge">SOVERSION</code> to the major version of the library and determines API compatibility. Generally I advise to use the following rules for versioning:</p>
+
+<ul>
+  <li>If your change the public API by removing or changing an interface class or function, increase the major version</li>
+  <li>If new symbols are added to the API but nothing is changed or remove increase the minor version</li>
+  <li>For implementation changes that do not affect the API increase the patch version</li>
+</ul>
+
+<p>Once the target is created and the properties are set, we can add the sources to the library target with <code class="language-plaintext highlighter-rouge">target_sources()</code>. This command takes the target name and a list of source files and adds them to the target. The sources are added as private sources, which means they are only visible to the target itself. This is important to hide implementation details from the library interface.</p>
+
+<p>Next we need to set up the include directories for the library. For the public include directories, there are two things to consider here, first the headers need to be available to the library itself and second, the headers need to be available to users of the library. This makes the <code class="language-plaintext highlighter-rouge">target_include_directories()</code> command a bit more complicated.</p>
+
+<div class="language-cmake highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">target_include_directories</span><span class="p">(</span>
+    Greeter
+    PRIVATE src
+    PUBLIC $&lt;BUILD_INTERFACE:<span class="si">${</span><span class="nv">CMAKE_CURRENT_SOURCE_DIR</span><span class="si">}</span>/include&gt;
+    $&lt;INSTALL_INTERFACE:<span class="si">${</span><span class="nv">CMAKE_INSTALL_INCLUDEDIR</span><span class="si">}</span>&gt;
+<span class="p">)</span>
+</code></pre></div></div>
+
+<p>This command takes the target name and a list of include directories. The <code class="language-plaintext highlighter-rouge">PRIVATE</code> keyword means that the include directory is only visible to the target itself. We add the <code class="language-plaintext highlighter-rouge">src</code> folder here which contains all the internal headers/
+The <code class="language-plaintext highlighter-rouge">PUBLIC</code> keyword means that the include directory is visible to the target and to users of the library, to differ the include path during building the library and when it is installed, a <a href="https://cmake.org/cmake/help/latest/manual/cmake-generator-expressions.7.html">generator expression</a> is used. If we’re building the library itself the <code class="language-plaintext highlighter-rouge">$&lt;BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include&gt;</code> expression will be evaluated to the <code class="language-plaintext highlighter-rouge">include</code> folder in the source directory. If the library is installed, the expression <code class="language-plaintext highlighter-rouge">$&lt;INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}&gt;</code> will be evaluated to the install include directory. This makes sure that the correct include directory is used when building the library and when it is installed.</p>
+
+<h2 id="setting-symbol-visibility">Setting symbol visibility</h2>
+
+<p>Separating the headers into private and public is one step to define the library interface, we can go a step further by defining the symbol visibility of the library. This is important to hide implementation details from the library interface and to reduce the size of the library. First the default visibility of the library is set to hidden:</p>
+
+<div class="language-cmake highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">set_target_properties</span><span class="p">(</span>Greeter PROPERTIES CXX_VISIBILITY_PRESET <span class="s2">"hidden"</span>
+                                         VISIBILITY_INLINES_HIDDEN TRUE<span class="p">)</span>
+</code></pre></div></div>
+
+<p>This means that all symbols are hidden by default and need to be explicitly exported. On Windows this is already the default, on linux und mac the default is that everything is visible. Additionally we can hide inlined functions by default, which will reduce the size of the library some more but it also means that inlined functions need to be explicitly exported.</p>
+
+<p>CMake has a built-in module called <code class="language-plaintext highlighter-rouge">GenerateExportHeader</code> that can be used to generate a header file that sets the symbol visibility according to the compiler settings, which is included with <code class="language-plaintext highlighter-rouge">include(GenerateExportHeader)</code>. This gives us the <code class="language-plaintext highlighter-rouge">generate_export_header()</code> command which generates the export macro header file for a target.</p>
+
+<div class="language-cmake highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nf">generate_export_header</span><span class="p">(</span>
+    Greeter
+    EXPORT_FILE_NAME
+    export/greeter/export_greeter.hpp
+<span class="p">)</span>
+</code></pre></div></div>
+
+<p>By default the export header will be created in the <code class="language-plaintext highlighter-rouge">${CMAKE_CURRENT_BINARY_DIR}</code> directory unless an absolute path is passed to <code class="language-plaintext highlighter-rouge">EXPORT_FILE_NAME</code>, in this case exporting to the default location is fine, but we define the folder structure and the file name to be  <code class="language-plaintext highlighter-rouge">export/greeter/export_greeter.hpp</code>. Putting the export file into its own subfolder helps later with finding and installing it. The generated header file contains the necessary macros to export symbols from the library.</p>
+
+<p>In order to use the included file with <code class="language-plaintext highlighter-rouge">#include &lt;greeter/export_greeter.hpp&gt;</code> we need to add the <code class="language-plaintext highlighter-rouge">${CMAKE_CURRENT_BINARY_DIR}</code> to the include path. This is done with the <code class="language-plaintext highlighter-rouge">target_include_directories()</code> command again. Again we use the generator expression to differ between building the library and installing it.</p>
+
+<div class="language-cmake highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+<span class="nb">target_include_directories</span><span class="p">(</span>
+    Greeter
+    PUBLIC $&lt;BUILD_INTERFACE:<span class="si">${</span><span class="nv">CMAKE_CURRENT_BINARY_DIR</span><span class="si">}</span>/export&gt;
+    $&lt;INSTALL_INTERFACE:<span class="si">${</span><span class="nv">CMAKE_INSTALL_INCLUDEDIR</span><span class="si">}</span>&gt;
+    
+<span class="p">)</span>
+</code></pre></div></div>
+<p>This concludes the setup of the library target and it can be built and used in other projects by using <code class="language-plaintext highlighter-rouge">add_subdirectory()</code> and <code class="language-plaintext highlighter-rouge">target_link_libraries()</code>. However for a library to be useful it needs to be installed and usable with <code class="language-plaintext highlighter-rouge">find_package()</code>.</p>
+
+<h2 id="defining-installation-behavior">Defining installation behavior</h2>
+
+<p>To make the library usable with <code class="language-plaintext highlighter-rouge">find_package()</code> we need to install the library and create a CMake package file. The first step is to define where the library should be installed. This is done with the <code class="language-plaintext highlighter-rouge">install()</code> command. The CMake module <code class="language-plaintext highlighter-rouge">GNUInstallDirs</code> defines the canonical install paths for different platforms which should be used except for special cases.</p>
+
+<p>The first thing to set is the install destination for the library itself. This is done with the <code class="language-plaintext highlighter-rouge">LIBRARY</code>, <code class="language-plaintext highlighter-rouge">ARCHIVE</code> and <code class="language-plaintext highlighter-rouge">RUNTIME</code> keywords. The <code class="language-plaintext highlighter-rouge">LIBRARY</code> keyword is used for shared libraries, the <code class="language-plaintext highlighter-rouge">ARCHIVE</code> keyword is used for static libraries and the <code class="language-plaintext highlighter-rouge">RUNTIME</code> keyword is used for executables. The <code class="language-plaintext highlighter-rouge">INCLUDES</code> keyword is used to install the include directories.</p>
+
+<div class="language-cmake highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+<span class="nb">install</span><span class="p">(</span>
+    TARGETS Greeter
+    EXPORT GreeterTargets
+    LIBRARY DESTINATION <span class="si">${</span><span class="nv">CMAKE_INSTALL_LIBDIR</span><span class="si">}</span>
+    ARCHIVE DESTINATION <span class="si">${</span><span class="nv">CMAKE_INSTALL_LIBDIR</span><span class="si">}</span>
+    RUNTIME DESTINATION <span class="si">${</span><span class="nv">CMAKE_INSTALL_BINDIR</span><span class="si">}</span>
+    INCLUDES DESTINATION <span class="si">${</span><span class="nv">CMAKE_INSTALL_INCLUDEDIR</span><span class="si">}</span>
+<span class="p">)</span>
+
+
+</code></pre></div></div>
+
+<p>This tells CMake to install the target <code class="language-plaintext highlighter-rouge">Greeter</code> the the paths specified below. the <code class="language-plaintext highlighter-rouge">EXPORT GreeterTargets</code> keyword tells CMake to export the target information to an export set called <code class="language-plaintext highlighter-rouge">GreeterTargets</code> which will be used later to create the CMake package file in order to make the installation usable with <code class="language-plaintext highlighter-rouge">find_package</code>. 
+The <code class="language-plaintext highlighter-rouge">CMAKE_INSTALL_LIBDIR</code>, <code class="language-plaintext highlighter-rouge">CMAKE_INSTALL_BINDIR</code> and <code class="language-plaintext highlighter-rouge">CMAKE_INSTALL_INCLUDEDIR</code> variables are defined by the <code class="language-plaintext highlighter-rouge">GNUInstallDirs</code> module.</p>
+
+<p>The public headers and the export-header need to be installed explicitly in a similar manner:</p>
+
+<div class="language-cmake highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">install</span><span class="p">(</span>DIRECTORY include/ DESTINATION <span class="si">${</span><span class="nv">CMAKE_INSTALL_INCLUDEDIR</span><span class="si">}</span><span class="p">)</span>
+<span class="nb">install</span><span class="p">(</span>
+    FILES <span class="s2">"</span><span class="si">${</span><span class="nv">CMAKE_CURRENT_BINARY_DIR</span><span class="si">}</span><span class="s2">/export/greeter/export_greeter.hpp"</span>
+    DESTINATION <span class="si">${</span><span class="nv">CMAKE_INSTALL_INCLUDEDIR</span><span class="si">}</span>/greeter
+<span class="p">)</span>
+</code></pre></div></div>
+
+<p>For normal usage in a system as runtime library this would be already enough, but since this is a CMake package we want this to be usable as easily as possible by other devs. This means we need to create a CMake package file that can be used with <code class="language-plaintext highlighter-rouge">find_package()</code>.</p>
+
+<h3 id="making-the-library-usable-with-find_package">Making the library usable with <code class="language-plaintext highlighter-rouge">find_package()</code>
+</h3>
+
+<p>CMake provides the <a href="https://cmake.org/cmake/help/latest/module/CMakePackageConfigHelpers.html">CMakePackageConfigHelpers</a> module which - as the name suggests - contains helper functions that can be used to create a CMake package file. A CMake package consists of a version information file, a configuration file and a list of exported targets. The version information file is used to check if the correct version of the package is installed and the package file is used to make the package usable with <code class="language-plaintext highlighter-rouge">find_package()</code>.</p>
+
+<p>The first step is to create the version information file with <code class="language-plaintext highlighter-rouge">write_basic_package_version_file()</code>.</p>
+
+<div class="language-cmake highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nf">write_basic_package_version_file</span><span class="p">(</span>
+    <span class="s2">"GreeterConfigVersion.cmake"</span>
+    VERSION <span class="si">${</span><span class="nv">PROJECT_VERSION</span><span class="si">}</span>
+    COMPATIBILITY SameMajorVersion<span class="p">)</span>
+</code></pre></div></div>
+
+<p>This command takes the name of the file to be created, the version of the package and the compatibility mode. The compatibility mode is used to determine if the package is compatible with the requested version. In this case we use <code class="language-plaintext highlighter-rouge">SameMajorVersion</code> which means that the package is compatible if the major version is the same.</p>
+
+<p>Next we generate the package file from a template:</p>
+
+<div class="language-cmake highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nf">configure_package_config_file</span><span class="p">(</span>
+    <span class="s2">"</span><span class="si">${</span><span class="nv">CMAKE_CURRENT_LIST_DIR</span><span class="si">}</span><span class="s2">/cmake/GreeterConfig.cmake.in"</span>
+    <span class="s2">"</span><span class="si">${</span><span class="nv">CMAKE_CURRENT_BINARY_DIR</span><span class="si">}</span><span class="s2">/GreeterConfig.cmake"</span>
+    INSTALL_DESTINATION <span class="si">${</span><span class="nv">CMAKE_INSTALL_DATAROOTDIR</span><span class="si">}</span>/cmake/greeter
+<span class="p">)</span>
+</code></pre></div></div>
+
+<p>internally calls <code class="language-plaintext highlighter-rouge">configure_file()</code> to generate the package file from the template. The generated file will be called <code class="language-plaintext highlighter-rouge">GreeterConfig.cmake</code> and will be installed to <code class="language-plaintext highlighter-rouge">${CMAKE_INSTALL_DATAROOTDIR}/cmake/greeter</code>. The template file is a generic file that looks like this:</p>
+
+<div class="language-cmake highlighter-rouge"><div class="highlight"><pre class="highlight"><code>@PACKAGE_INIT@
+
+<span class="nb">include</span><span class="p">(</span><span class="s2">"</span><span class="si">${</span><span class="nv">CMAKE_CURRENT_LIST_DIR</span><span class="si">}</span><span class="s2">/@PROJECT_NAME@Targets.cmake"</span><span class="p">)</span>
+<span class="nf">check_required_components</span><span class="p">(</span><span class="s2">"@PROJECT_NAME@"</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p>The <code class="language-plaintext highlighter-rouge">@PACKAGE_INIT@</code> macro is replaced by the <code class="language-plaintext highlighter-rouge">CMakePackageConfigHelpers</code> module with the necessary code to initialize the package. The <code class="language-plaintext highlighter-rouge">@PROJECT_NAME@</code> macro is replaced with the project name. It includes the file containing the targets and checks if the required components are available.</p>
+
+<p>The last step is to install the CMake targets:</p>
+
+<div class="language-cmake highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">install</span><span class="p">(</span>
+    EXPORT GreeterTargets
+    FILE GreeterTargets.cmake
+    NAMESPACE Greeter::
+    DESTINATION <span class="si">${</span><span class="nv">CMAKE_INSTALL_DATAROOTDIR</span><span class="si">}</span>/cmake/greeter
+<span class="p">)</span>
+</code></pre></div></div>
+
+<p>This takes the export set <code class="language-plaintext highlighter-rouge">GreeterTargets</code> which we created above with the <code class="language-plaintext highlighter-rouge">install(EXPORT)</code> command and installs it to <code class="language-plaintext highlighter-rouge">${CMAKE_INSTALL_DATAROOTDIR}/cmake/greeter</code>. Then the namespace <code class="language-plaintext highlighter-rouge">Greeter::</code> is added to the targets in the export set. This means that the targets can be used with <code class="language-plaintext highlighter-rouge">Greeter::Greeter</code> instead of just <code class="language-plaintext highlighter-rouge">Greeter</code>.</p>
+
+<p>With this the library is ready to be, built installed and used with <code class="language-plaintext highlighter-rouge">find_package()</code>. To build and install the library call.</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>cmake <span class="nt">-B</span> build <span class="nt">-S</span> <span class="nb">.</span>
+cmake <span class="nt">--build</span> build <span class="nt">--target</span> <span class="nb">install</span>
+</code></pre></div></div>
+
+<p>By default this will create a static library, to create a shared library add <code class="language-plaintext highlighter-rouge">-DBUILD_SHARED_LIBS=ON</code> to the <code class="language-plaintext highlighter-rouge">cmake</code> command to configure the project.</p>
+
+<p>The setup described here is the bare minimum to create a clean library with CMake. There are a few more things that can be done to make the library more usable and portable, like adding <a href="https://cmake.org/cmake/help/latest/module/CPack.html">packaging information</a> and of course it pays to set up proper <a href="https://cmake.org/cmake/help/latest/module/CPack.html">testing</a> as well.</p>
+
+</div>
+
+<div class="tags my-4">
+    
+        <span class="tag  is-primary ">
+    cmake
+</span>
+
+    
+</div>
+
+
+    <div class="my-4">
+        <p><strong>Share</strong></p>
+<div class="buttons ">
+    <a class="button is-medium is-facebook" onclick="window.open(&#39;https://www.facebook.com/share.php?u=https://softwarecraft.ch//cmake-library-setup/&#39;);">
+        <span class="icon"><i class="fab fa-facebook fa-lg"></i></span>
+    </a>
+    <a class="button is-medium is-twitter" onclick="window.open(&#39;https://twitter.com/intent/tweet?text=https://softwarecraft.ch//cmake-library-setup/&#39;);">
+        <span class="icon"><i class="fab fa-twitter fa-lg"></i></span>
+    </a>
+    <a class="button is-medium is-linkedin" onclick="window.open(&#39;https://www.linkedin.com/shareArticle?mini=true&amp;url=https://softwarecraft.ch//cmake-library-setup/&amp;title=CMake+line+by+line+-+Creating+a+library&amp;summary=&amp;source=&#39;);">
+        <span class="icon"><i class="fab fa-linkedin fa-lg"></i></span>
+    </a>
+    <a class="button is-medium is-reddit" onclick="window.open(&#39;https://reddit.com/submit?url=https://softwarecraft.ch//cmake-library-setup/&#39;);">
+        <span class="icon"><i class="fab fa-reddit fa-lg"></i></span>
+    </a>
+</div>
+
+    </div>
+
+
+
+
+                    </main>
+                    
+                </div>
+            </div>
+        </section>
+        
+            <footer class="footer">
+    <div class="contact-info" style="float: left; text-align: left; margin-right: 2rem;">
+        <p>
+            <a href="mailto:info@softwarecraft.ch">
+                <i class="fa fa-envelope" aria-hidden="true"></i> info@softwarecraft.ch
+            </a>
+        </p>
+        <p>
+            <a href="tel:+41%2078%20859%2097%2070">
+                <i class="fa fa-phone" aria-hidden="true"></i> +41 78 859 97 70
+            </a>
+        </p>
+        <p>
+            <i class="fa fa-mail-bulk" aria-hidden="true"></i> SoftwareCraft Dominik Berner, Fabrikstrasse 11, CH-8180
+            Bülach
+        </p>
+    </div>
+    <div class="container">
+        
+
+        
+    <div class="buttons is-centered mt-6 mb-6">
+        
+        
+        
+        
+        
+        
+    </div>
+
+
+
+        <div class="content is-small has-text-centered">
+            <p class="">Theme built by <a href="https://www.csrhymes.com/">C.S. Rhymes</a></p>
+        </div>
+    </div>
+</footer>
+        
+        <script src="./CMake line by line - Creating a library _ SoftwareCraft_files/app.js.download" type="text/javascript"></script><!-- footer scripts -->
+
+
+</body></html>
