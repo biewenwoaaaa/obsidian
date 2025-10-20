@@ -13,26 +13,40 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "电磁场/电磁场与电磁波.md",
+                "file": "Untitled 2.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "电磁场与电磁波"
+              "title": "Untitled 2"
             }
           },
           {
-            "id": "a158c096af2468ba",
+            "id": "13a168d97028b6a4",
             "type": "leaf",
             "state": {
               "type": "markdown",
               "state": {
-                "file": "OpenGL/OpenGL.md",
+                "file": "C++集群服务器开发/C++集群服务器开发.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "OpenGL"
+              "title": "C++集群服务器开发"
+            }
+          },
+          {
+            "id": "8a1e6961874ca1d4",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "Untitled.md",
+                "mode": "source",
+                "source": false
+              },
+              "icon": "lucide-file",
+              "title": "Untitled"
             }
           }
         ],
@@ -109,7 +123,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "OpenGL/OpenGL.md",
+                "file": "STM32/STM32入门100步.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -119,7 +133,7 @@
                 "unlinkedCollapsed": false
               },
               "icon": "links-coming-in",
-              "title": "Backlinks for OpenGL"
+              "title": "Backlinks for STM32入门100步"
             }
           },
           {
@@ -128,12 +142,12 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "OpenGL/OpenGL.md",
+                "file": "STM32/STM32入门100步.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               },
               "icon": "links-going-out",
-              "title": "Outgoing links from OpenGL"
+              "title": "Outgoing links from STM32入门100步"
             }
           },
           {
@@ -157,17 +171,17 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "OpenGL/OpenGL.md",
+                "file": "C++集群服务器开发/C++集群服务器开发.md",
                 "followCursor": false,
                 "showSearch": true,
-                "searchQuery": ""
+                "searchQuery": "proto"
               },
               "icon": "lucide-list",
-              "title": "Outline of OpenGL"
+              "title": "Outline of C++集群服务器开发"
             }
           }
         ],
-        "currentTab": 2
+        "currentTab": 3
       }
     ],
     "direction": "horizontal",
@@ -181,64 +195,63 @@
       "canvas:Create new canvas": false,
       "daily-notes:Open today's daily note": false,
       "templates:Insert template": false,
-      "obsidian-excalidraw-plugin:Create new drawing": false,
       "command-palette:Open command palette": false,
       "obsidian-excalidraw-plugin:New drawing": false
     }
   },
-  "active": "a158c096af2468ba",
+  "active": "13a168d97028b6a4",
   "lastOpenFiles": [
-    "OpenGL/OpenGL Learning.md",
-    "OpenGL/OpenGL.md",
-    "MySQL/MySQL.md",
-    "Excalidraw/Drawing 2025-08-27 15.07.36.excalidraw.md",
-    "Excalidraw/Drawing 2025-05-16 13.51.22.excalidraw.md",
-    "Excalidraw/Drawing 2025-05-13 17.36.03.excalidraw.md",
-    "Excalidraw/Drawing 2024-10-08 13.42.20.excalidraw.md",
-    "magicCube/MagicCube.md",
-    "Linux/Linux.md",
-    "C++集群服务器开发/GDB常用命令.md",
-    "分布式mprpc项目/笔记.md",
-    "分布式mprpc项目/Pasted image 20250619161223.png",
-    "分布式mprpc项目/CMake line by line - Creating a library _ SoftwareCraft_files/cmake-best-practices-2nd-edition.jpg",
-    "C++集群服务器开发/Pasted image 20250521161223.png",
-    "C++集群服务器开发/Pasted image 20250521205213.png",
-    "C++集群服务器开发/Pasted image 20250521204624.png",
-    "C++集群服务器开发/Pasted image 20250521161855.png",
+    "讲故事.md",
+    "面经.md",
+    "面经2.md",
     "C++集群服务器开发/C++集群服务器开发.md",
+    "Untitled 2.md",
+    "Untitled.md",
+    "test.md",
+    "Untitled 1.md",
+    "精英数科.md",
+    "搭建yolov5.md",
+    "溥仪.md",
+    "后记.md",
+    "Untitled 3.canvas",
+    "Pasted image 20250318140107.png",
+    "Pasted image 20250318140101.png",
+    "obsidian常用语法.md",
+    "Untitled 2.canvas",
+    "电脑装机名词解释.md",
+    "SpdLog.md",
+    "Pasted image 20250806001828.png",
+    "Pasted image 20250423190741.png",
+    "Pasted image 20250410230317.png",
+    "F1569AAE.jpg",
+    "docker.md",
+    "Untitled 2.base",
+    "Untitled.base",
+    "Untitled 1.base",
+    "Untitled 1.canvas",
+    "Untitled.canvas",
+    "().md",
+    "电磁场/电磁场理论及应用, 第二版 (马西奎) (Z-Library).pdf",
+    "电磁场/电磁场与电磁波.md",
+    "电磁场/工程电磁场导论  第2版 (马西奎，冯慈璋) (Z-Library).pdf",
+    "电磁场/Drawing 2025-08-27 15.10.32.excalidraw.md",
+    "流浪的王妃/政治联姻素材/imgi_92_1280.jpeg",
+    "流浪的王妃/政治联姻素材/溥杰3.jpg",
+    "流浪的王妃/政治联姻素材/溥杰2.jpg",
+    "流浪的王妃/政治联姻素材/婚礼.jpg",
+    "末代皇帝溥仪/末代皇帝溥仪 (喻大华) (Z-Library).pdf",
+    "慈禧全传/慈禧全传（全十册，从政、经商必读之作。在男人专权的政治舞台上，她展现出高人一筹的政治手腕！《胡雪岩》作者历史大家高阳再现晚清风云！... (Z-Library).pdf",
+    "分布式mprpc项目/笔记.md",
+    "windbg/windbg.md",
+    "STM32/STM32IOT物联网开发30步.md",
+    "STM32/STM32入门100步.md",
+    "STM32/极速入门模数电.md",
+    "STM32/Altium Designer 笔记.md",
+    "OpenGL/OpenGL Learning.md",
     "分布式mprpc项目/CMake line by line - Creating a library _ SoftwareCraft_files/app.css",
     "分布式mprpc项目/CMake line by line - Creating a library _ SoftwareCraft_files/cdn.min.js.download",
     "分布式mprpc项目/CMake line by line - Creating a library _ SoftwareCraft_files/js.cookie.min.js.download",
-    "分布式mprpc项目/CMake line by line - Creating a library _ SoftwareCraft_files/all.min.css",
-    "分布式mprpc项目/CMake line by line - Creating a library _ SoftwareCraft_files/plausible.js.download",
-    "分布式mprpc项目/CMake line by line - Creating a library _ SoftwareCraft_files/app.js.download",
-    "分布式mprpc项目/CMake line by line - Creating a library _ SoftwareCraft_files/bulma-social.min.css",
-    "分布式mprpc项目/CMake line by line - Creating a library _ SoftwareCraft.html",
-    "分布式mprpc项目/CMake line by line - Creating a library _ SoftwareCraft_files",
-    "流浪的王妃/虚惊一场素材/婉容视频.mp4",
-    "电磁场/电磁场与电磁波.md",
-    "面经2.md",
-    "面经.md",
-    "docker.md",
-    "流浪的王妃/虚惊一场素材/cacfd6e1-3e23-43bf-af97-594861a5b5f1.jpg",
-    "流浪的王妃/政治联姻素材/f69b5062-539c-41e3-95af-1bbf3afb5675.jpg",
-    "流浪的王妃/政治联姻素材/imgi_92_1280.jpeg",
-    "流浪的王妃/imgi_92_1280.jpeg",
-    "电磁场/Drawing 2025-08-27 15.10.32.excalidraw.md",
-    "Untitled 2.canvas",
-    "溥仪.md",
-    "SpdLog.md",
-    "hitfilm 剪辑教学.md",
     "流浪的王妃/演讲大纲.canvas",
-    "流浪的王妃/皇弟与妃.md",
-    "流浪的王妃/流浪的王妃.md",
-    "Untitled 1.md",
-    "Untitled 2.md",
-    "Untitled 1.canvas",
-    "Untitled 3.canvas",
-    "Excalidraw/Drawing 2025-05-13 17.36.02.excalidraw.md",
-    "Untitled.canvas",
-    "讲故事.md",
     "findAJob/want.canvas"
   ]
 }

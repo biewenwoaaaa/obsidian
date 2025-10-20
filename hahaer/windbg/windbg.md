@@ -791,13 +791,14 @@ int main() {
 ---
 
 ### ⚠️ 注意事项总结：
+| 成员类型        | 是否导出               | 说明                                                  |
+| ----------- | ------------------ | --------------------------------------------------- |
+| **非静态成员函数** | ✅ 导出               | 编译器为这些成员函数生成可导出的符号（供 DLL 外部使用）                      |
+| **非静态成员变量** | ❌ 不单独导出            | 只有类对象整体实例可被外部访问，不会单独导出成员变量符号                        |
+| **静态成员变量**  | ⚠️ 仅声明被导出，定义需显式导出  | 静态成员变量必须**在类外定义时**再加上 `__declspec(dllexport)` 才真正导出 |
+| **静态成员函数**  | ✅ 导出               | 和普通成员函数一样被导出                                        |
+| **内联函数**    | 🚫 不导出（在头文件中被内联展开） | 只在编译单元中展开，无需导出符号                                    |
 
-|成员类型|是否能访问|是否需要导出|
-|---|---|---|
-|非静态成员变量|✅ 可以|❌ 不需单独导出（通过对象访问）|
-|成员函数|✅ 可以|✅ 需要导出（`__declspec(dllexport)`）|
-|静态成员变量|✅ 访问可行|✅ 必须显式导出符号|
-|内联函数|⚠️ 可能不会导出|✅ 建议不内联或放入 `.cpp`|
 
 ---
 
@@ -947,77 +948,149 @@ Kernel
 - DPC 
 - we cannot wait on DPC or higher ? why?
 
-### **Explanation of IRQL (Interrupt Request Level)**
-
-In Windows, **IRQL (Interrupt Request Level)** represents the priority at which code runs in the kernel. IRQL ensures that critical operations aren't interrupted by less critical ones. The IRQL system has several levels, such as:
-
-- **PASSIVE_LEVEL (0)**: The lowest IRQL, used for normal thread execution in user or kernel mode.
-- **APC_LEVEL (1)**: Used for Asynchronous Procedure Calls.
-- **DISPATCH_LEVEL (2)**: Used for dispatching Deferred Procedure Calls (DPCs).
-- **Device-specific IRQLs**: Higher levels for handling specific hardware interrupts.
-- **HIGH_LEVEL**: The highest IRQL, usually for system-critical operations.
-
-When executing code at a particular IRQL, the system blocks interrupts of equal or lower priority to ensure critical operations aren't interrupted.
+这段英文内容在讲 **Windows 内核（kernel）中的中断优先级系统 IRQL（Interrupt Request Level）**，以及 **为什么在高优先级的 IRQL（比如 DISPATCH_LEVEL）下不能“等待（wait）”**。下面我用中文详细解释一下：
 
 ---
 
-### **What is DPC (Deferred Procedure Call)?**
+## 🧠 一、什么是 IRQL（中断请求级别）
 
-- **DPC** is a mechanism in the Windows kernel used to handle lower-priority work that cannot be executed immediately in an interrupt context.
-- When an interrupt occurs, the Interrupt Service Routine (ISR) executes quickly and schedules a **DPC** to perform more time-consuming tasks at a lower priority (IRQL = DISPATCH_LEVEL).
-- DPCs run after the higher-priority work (interrupts) is complete but before normal thread execution (PASSIVE_LEVEL).
+在 Windows 内核里，**IRQL（Interrupt Request Level，中断请求级别）** 用来表示“当前代码运行的优先级”。  
+它决定了哪些中断可以被响应、哪些必须暂时屏蔽，以防止关键代码被打断。
 
----
+IRQL 越高 → 优先级越高 → 被打断的可能性越小。
 
-### **Why Can't We Wait at IRQL = DISPATCH_LEVEL or Higher?**
+常见的 IRQL 等级如下：
 
-#### 1. **Waiting Requires Lower IRQL**
+|IRQL 等级|名称|用途|
+|---|---|---|
+|**PASSIVE_LEVEL (0)**|最低级别|普通线程执行，能访问用户空间、能等待、能睡眠|
+|**APC_LEVEL (1)**|异步过程调用级别|用于异步回调机制（APC）|
+|**DISPATCH_LEVEL (2)**|调度级别|用于处理 DPC（延迟过程调用）|
+|**设备中断级别（Device IRQLs）**|更高|对应硬件中断服务|
+|**HIGH_LEVEL**|最高|系统关键任务级别|
 
-- **Waiting** in Windows means putting the current thread into a wait state (e.g., waiting for a resource, synchronization object, or signal).
-- This process involves **scheduling** another thread to run while the current thread waits. However:
-    - Thread scheduling only occurs at IRQL = **PASSIVE_LEVEL**.
-    - At IRQL = DISPATCH_LEVEL or higher, the system disables thread scheduling to prioritize high-priority tasks.
-
-#### 2. **No Preemption Allowed**
-
-- At DISPATCH_LEVEL or higher, thread preemption is disabled to ensure that critical operations are not interrupted.
-- If a thread attempts to wait, it would block indefinitely, causing the system to hang.
-
-#### 3. **Interrupts Are Disabled**
-
-- At IRQL = DISPATCH_LEVEL, hardware interrupts of lower priority are masked (disabled).
-- Waiting would block the system from responding to other interrupts, potentially causing critical tasks to fail.
-
-#### 4. **DPCs Are Time-Sensitive**
-
-- DPCs are designed to execute quickly and return control to the system.
-- Allowing waiting inside a DPC would violate the time-sensitivity requirement, causing delays in interrupt processing and system instability.
+**规则**：  
+当 CPU 运行在某个 IRQL 时，会屏蔽掉 _同级别及以下_ 的中断。  
+比如运行在 `DISPATCH_LEVEL` 时，系统不会再响应普通线程的调度，也不会再切换线程。
 
 ---
 
-### **What Happens If You Try to Wait at DISPATCH_LEVEL or Higher?**
+## ⚙️ 二、什么是 DPC（Deferred Procedure Call，延迟过程调用）
 
-- The Windows kernel detects the illegal wait and triggers a **bug check (blue screen)** with an error code like `IRQL_NOT_LESS_OR_EQUAL`.
-- This ensures that poorly written drivers or code do not compromise system stability.
+DPC 是 Windows 的一种内核机制，用于**延迟执行低优先级任务**。
+
+它的运行机制如下：
+
+1. **当硬件中断（ISR）发生时**，中断服务例程只执行最关键的部分（非常快）。
+    
+2. 如果有后续复杂工作，它会 **排队一个 DPC**。
+    
+3. **DPC 会在较低的 IRQL（DISPATCH_LEVEL）下执行**，等系统忙完更高优先级的任务再执行。
+    
+
+也就是说，DPC 是一种“稍后再处理”的机制，让系统保持高响应性。
 
 ---
 
-### **How to Handle Waiting at Higher IRQLs?**
+## 🚫 三、为什么在 IRQL = DISPATCH_LEVEL 或更高时不能“等待”
 
-- **Use pre-acquired resources**: Ensure all required resources (e.g., locks, memory) are available before raising the IRQL.
-- **Queue work to a lower IRQL**: Use mechanisms like DPCs or worker threads to defer waiting operations to a lower IRQL (e.g., PASSIVE_LEVEL).
+**等待（wait）** 意味着线程要“睡眠”，等待某个事件、信号或资源可用。  
+但在内核中，**等待的实现依赖于线程调度（scheduling）**。
+
+问题是：
+
+> **在 DISPATCH_LEVEL 或更高 IRQL 下，Windows 禁止线程调度。**
+
+原因如下👇
+
+### 1️⃣ 线程调度只能在 PASSIVE_LEVEL 进行
+
+- 当线程进入等待状态时，系统必须切换到别的线程。
+    
+- 线程切换、调度操作只能在 **IRQL = PASSIVE_LEVEL** 执行。
+    
+- 如果此时在 DISPATCH_LEVEL 以上尝试等待，系统根本无法切换线程，就会死锁。
+    
 
 ---
 
-### **Summary**
+### 2️⃣ 高 IRQL 屏蔽中断
 
-We cannot wait at IRQL = DISPATCH_LEVEL or higher because:
+- 在 DISPATCH_LEVEL 时，系统已经屏蔽了较低级别的中断。
+    
+- 如果等待操作导致阻塞，**系统无法响应硬件中断**，整个系统可能卡死。
+    
 
-1. Thread scheduling is disabled at these IRQLs.
-2. Waiting would block high-priority operations, leading to system instability.
-3. DPCs are designed to execute quickly and waiting violates this principle.
+---
 
-To perform operations requiring waiting, they must be deferred to PASSIVE_LEVEL using mechanisms like worker threads or callbacks.
+### 3️⃣ DPC 设计理念：必须“短小快速”
+
+DPC（运行在 DISPATCH_LEVEL）被设计为“干完就走”的任务。  
+如果在 DPC 里等待资源或延迟操作，会：
+
+- 延长系统中断延迟时间；
+    
+- 堵塞后续的中断和 DPC；
+    
+- 造成系统响应变慢甚至蓝屏。
+    
+
+---
+
+## 💥 四、如果在高 IRQL 下“等待”会怎样？
+
+Windows 内核会检测到这种非法行为，然后：
+
+- 触发蓝屏（Bug Check）；
+    
+- 常见错误码：`IRQL_NOT_LESS_OR_EQUAL`。
+    
+
+这是 Windows 防止驱动程序错误操作的一种保护机制。
+
+---
+
+## 🛠️ 五、如果确实要在高 IRQL 做等待相关的事，该怎么做？
+
+解决方法有两种：
+
+1. **提前准备资源**  
+    在提高 IRQL 之前，把要用的锁、内存、句柄等都准备好，避免需要等待。
+    
+2. **把任务“推迟”到低 IRQL 执行**  
+    比如：
+    
+    - 从 ISR（中断服务例程）里排队一个 DPC；
+        
+    - 或者在 DPC 里再创建一个 Worker Thread（工作线程）；
+        
+    - 让真正需要等待的代码在 **PASSIVE_LEVEL** 下执行。
+        
+
+---
+
+## ✅ 总结
+
+在 Windows 内核中：
+
+|项目|可以等待吗|说明|
+|---|---|---|
+|PASSIVE_LEVEL|✅ 可以|普通线程级别|
+|APC_LEVEL|✅ 可以（有限制）|APC 回调时|
+|DISPATCH_LEVEL 及更高|🚫 不可以|会导致系统死锁或蓝屏|
+
+**原因总结：**
+
+1. 线程调度在高 IRQL 被禁止；
+    
+2. 等待会导致阻塞和系统卡死；
+    
+3. DPC 必须快速执行，不允许等待。
+    
+
+---
+
+如果你想，我可以帮你画一个示意图：从 ISR → DPC → Worker Thread 的执行链路，直观展示 IRQL 的变化和“等待”应该放在哪个阶段。是否需要？
 
 ### Paged pool:can be on RAM and disk
 Non-Paged pool: can only on RAM

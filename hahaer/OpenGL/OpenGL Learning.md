@@ -122,13 +122,12 @@ FragColor = texture(ourTexture, TexCoord);
 
 在渲染时，将纹理绑定到一个指定的纹理单元，并将其传递到着色器中。
 
-cpp
 
-Copy code
-glActiveTexture(GL_TEXTURE0);  // 激活纹理单元 glBindTexture(GL_TEXTURE_2D, texture);  // 绑定纹理 shader.setInt("ourTexture", 0);  // 将纹理单元传递给着色器`
-
-
-
+```cpp
+glActiveTexture(GL_TEXTURE0);  // 激活纹理单元
+glBindTexture(GL_TEXTURE_2D, texture);  // 绑定纹理 
+shader.setInt("ourTexture", 0);  // 将纹理单元传递给着色器
+```
 
 ### 5. **纹理参数**
 
@@ -203,11 +202,11 @@ QT_VERSION = 6.8 → 不满足 VERSION_LESS 6.3
 
 具体表现：
 
-|工具|功能|自动开启|
-|---|---|---|
-|`qt_add_executable(...)`|生成可执行程序|✅ 自动启用 `AUTOMOC`|
-|`qt_add_qml_module(...)`|QML 模块资源打包|✅ 自动处理资源和依赖|
-|`qt_import_qml_plugins(...)`|QML 插件依赖处理|✅ 自动生成 import 代码（可选）|
+| 工具                           | 功能         | 自动开启                 |
+| ---------------------------- | ---------- | -------------------- |
+| `qt_add_executable(...)`     | 生成可执行程序    | ✅ 自动启用 `AUTOMOC`     |
+| `qt_add_qml_module(...)`     | QML 模块资源打包 | ✅ 自动处理资源和依赖          |
+| `qt_import_qml_plugins(...)` | QML 插件依赖处理 | ✅ 自动生成 import 代码（可选） |
 
 ---
 
